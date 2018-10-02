@@ -1,7 +1,7 @@
 package nl.korfdegidts.webservices;
 
 import nl.korfdegidts.authentication.LoginCredentials;
-import nl.korfdegidts.authentication.User;
+import nl.korfdegidts.components.User;
 import org.junit.Before;
 import org.junit.Test;
 
