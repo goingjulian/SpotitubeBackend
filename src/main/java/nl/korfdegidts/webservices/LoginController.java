@@ -13,21 +13,21 @@ import javax.ws.rs.core.Response;
 @Path("/login")
 public class LoginController {
 
+    private User userToCompare = new User(new LoginCredentials("julian", "pass"));
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(LoginCredentials credentials) {
 
-        User userToCompare = new User(new LoginCredentials("julian", "pass"));
-
-        if (credentialsIdentical(credentials, userToCompare)) {
+        if (credentialsCorrect(credentials, userToCompare)) {
 
             return Response.status(Response.Status.CREATED).entity(userToCompare.getToken()).build();
         }
         return Response.status(Response.Status.UNAUTHORIZED).build();
     }
 
-    private boolean credentialsIdentical(LoginCredentials credentials, User userToCompare) {
+    boolean credentialsCorrect(LoginCredentials credentials, User userToCompare) {
         return credentials.getUser().equals(userToCompare.getCredentials().getUser())
                 && credentials.getPassword().equals(userToCompare.getCredentials().getPassword());
     }
