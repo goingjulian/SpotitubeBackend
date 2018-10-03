@@ -1,10 +1,14 @@
-package nl.korfdegidts.components;
+package nl.korfdegidts.Responses;
+
+import nl.korfdegidts.components.Playlist;
+import nl.korfdegidts.components.Track;
+import nl.korfdegidts.components.User;
 
 import java.util.List;
 
 public class AllPlaylistsResponse {
     private List<Playlist> playlists;
-    int length = 0;
+    private int length;
 
     public AllPlaylistsResponse(User user) {
         playlists = user.getPlaylists();

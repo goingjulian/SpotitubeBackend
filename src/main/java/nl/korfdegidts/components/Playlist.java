@@ -4,22 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Playlist {
-    private static int currentId = 0;
-    private User ownerObj; //remove??
-
     private int id;
+
     private String name;
     private boolean owner;
     private List<Track> tracks = new ArrayList<>(); //remove??
 
-    public Playlist(String name, User ownerObj) {
+    public Playlist(int id, String name, boolean owner) {
         this.name = name;
-        this.ownerObj = ownerObj;
-
-        this.owner = true;
-
-        id = currentId;
-        currentId++;
+        this.owner = owner;
+        this.id = id;
     }
 
     public int getId() {
@@ -36,5 +30,9 @@ public class Playlist {
 
     public List<Track> getTracks() {
         return tracks;
+    }
+
+    public void addTrack(Track track) {
+        tracks.add(track);
     }
 }

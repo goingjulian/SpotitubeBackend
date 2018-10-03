@@ -28,4 +28,14 @@ public class SpotitubeBackendTest {
 
         assertNull(sut.getUserFromCredentials(credentials));
     }
+
+    @Test
+    public void testIfUserIsReturnedIfTokenDoesMatchUser() {
+        assertEquals(sut.hardCodedUser, sut.getUserFromToken("1234-1234-1234"));
+    }
+
+    @Test
+    public void testIfNullIsReturnedIfTokenDoesNotMatchUser() {
+        assertEquals(sut.hardCodedUser, sut.getUserFromToken("1234-1234-1234"));
+    }
 }

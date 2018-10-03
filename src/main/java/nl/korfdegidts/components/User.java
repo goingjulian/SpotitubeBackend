@@ -33,7 +33,7 @@ public class User {
         return playlists;
     }
 
-    public void addPlaylist(String name) {
-        playlists.add(new Playlist(name, this));
+    public void addPlaylist(int id, String name) {
+        playlists.add(new Playlist(id, name, true));
     }
 }
