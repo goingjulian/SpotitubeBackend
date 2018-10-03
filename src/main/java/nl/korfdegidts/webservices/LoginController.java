@@ -1,7 +1,7 @@
 package nl.korfdegidts.webservices;
 
 import nl.korfdegidts.authentication.LoginCredentials;
-import nl.korfdegidts.authentication.User;
+import nl.korfdegidts.components.User;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -22,7 +22,7 @@ public class LoginController {
 
         if (credentialsCorrect(credentials, userToCompare)) {
 
-            return Response.status(Response.Status.CREATED).entity(userToCompare.getToken()).build();
+            return Response.status(Response.Status.CREATED).entity(userToCompare.getTokenObject()).build();
         }
         return Response.status(Response.Status.UNAUTHORIZED).build();
     }
