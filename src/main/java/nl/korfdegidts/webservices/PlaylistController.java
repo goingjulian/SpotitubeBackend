@@ -6,8 +6,8 @@ import nl.korfdegidts.components.User;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -16,17 +16,16 @@ public class PlaylistController {
     private User hardCodedUser = new User(new LoginCredentials("julian", "pass"));
 
     public PlaylistController() {
-        hardCodedUser.createPlaylist("Cool Songs");
-        hardCodedUser.createPlaylist("Angry Songs");
-        hardCodedUser.createPlaylist("Sad Songs");
-        hardCodedUser.createPlaylist("Great Songs");
+        hardCodedUser.addPlaylist("Cool Songs");
+        hardCodedUser.addPlaylist("Angry Songs");
+        hardCodedUser.addPlaylist("Sad Songs");
+        hardCodedUser.addPlaylist("Great Songs");
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{token}")
-    public Response getAllPlaylistsFromUser(@PathParam("token") String token) {
-        if (token.equals(hardCodedUser.getToken().getStringToken())) {
+    public Response getAllPlaylistsFromUser(@QueryParam("token") String token) {
+        if (token.equals(hardCodedUser.getTokenObject().getToken())) {
 
             AllPlaylistsResponse allPlaylistsResponse = new AllPlaylistsResponse(hardCodedUser);
 

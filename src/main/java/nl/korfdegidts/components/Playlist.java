@@ -5,12 +5,12 @@ import java.util.List;
 
 public class Playlist {
     private static int currentId = 0;
-    private User ownerObj;
+    private User ownerObj; //remove??
 
     private int id;
     private String name;
     private boolean owner;
-    private List<Track> tracks = new ArrayList<>();
+    private List<Track> tracks = new ArrayList<>(); //remove??
 
     public Playlist(String name, User ownerObj) {
         this.name = name;

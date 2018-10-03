@@ -13,7 +13,7 @@ public class UserToken {
         this.token = token;
     }
 
-    public String getUserName() {
+    public String getUser() {
         return user;
     }
 
@@ -21,7 +21,7 @@ public class UserToken {
         this.user = user;
     }
 
-    public String getStringToken() {
+    public String getToken() {
         return token;
     }
 

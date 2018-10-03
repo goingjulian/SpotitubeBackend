@@ -21,7 +21,7 @@ public class User {
         return credentials;
     }
 
-    public UserToken getToken() {
+    public UserToken getTokenObject() {
         return token;
     }
 
@@ -33,7 +33,7 @@ public class User {
         return playlists;
     }
 
-    public void createPlaylist(String name) {
+    public void addPlaylist(String name) {
         playlists.add(new Playlist(name, this));
     }
 }

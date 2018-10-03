@@ -3,12 +3,12 @@ package nl.korfdegidts.components;
 import java.util.List;
 
 public class AllPlaylistsResponse {
-    int totalLength = 0;
     private List<Playlist> playlists;
+    int length = 0;
 
     public AllPlaylistsResponse(User user) {
         playlists = user.getPlaylists();
-        totalLength = calculateTotalLenght();
+        length = calculateTotalLenght();
     }
 
     private int calculateTotalLenght() {
@@ -35,7 +35,7 @@ public class AllPlaylistsResponse {
         return playlists;
     }
 
-    public int getTotalLength() {
-        return totalLength;
+    public int getLength() {
+        return length;
     }
 }
