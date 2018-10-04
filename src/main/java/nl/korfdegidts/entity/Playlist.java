@@ -1,4 +1,4 @@
-package nl.korfdegidts.components;
+package nl.korfdegidts.entity;
 
 import java.util.ArrayList;
 import java.util.List;

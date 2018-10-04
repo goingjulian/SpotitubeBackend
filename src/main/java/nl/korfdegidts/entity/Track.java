@@ -1,4 +1,4 @@
-package nl.korfdegidts.components;
+package nl.korfdegidts.entity;
 
 public abstract class Track {
     private int id;

@@ -1,4 +1,4 @@
-package nl.korfdegidts.webservices;
+package nl.korfdegidts.controller;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;

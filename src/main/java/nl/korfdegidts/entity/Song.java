@@ -1,4 +1,4 @@
-package nl.korfdegidts.components;
+package nl.korfdegidts.entity;
 
 public class Song extends Track {
     private String album;

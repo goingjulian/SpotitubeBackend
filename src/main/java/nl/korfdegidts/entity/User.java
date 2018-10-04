@@ -1,4 +1,4 @@
-package nl.korfdegidts.components;
+package nl.korfdegidts.entity;
 
 import nl.korfdegidts.authentication.LoginCredentials;
 import nl.korfdegidts.authentication.UserToken;
@@ -25,6 +25,9 @@ public class User {
         return token;
     }
 
+    /**
+     * Replace with DB!!!
+     */
     private String generateToken() {
         return "1234-1234-1234";
     }

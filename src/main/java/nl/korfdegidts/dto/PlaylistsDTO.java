@@ -1,16 +1,16 @@
-package nl.korfdegidts.Responses;
+package nl.korfdegidts.dto;
 
-import nl.korfdegidts.components.Playlist;
-import nl.korfdegidts.components.Track;
-import nl.korfdegidts.components.User;
+import nl.korfdegidts.entity.Playlist;
+import nl.korfdegidts.entity.Track;
+import nl.korfdegidts.entity.User;
 
 import java.util.List;
 
-public class AllPlaylistsResponse {
+public class PlaylistsDTO {
     private List<Playlist> playlists;
     private int length;
 
-    public AllPlaylistsResponse(User user) {
+    public PlaylistsDTO(User user) {
         playlists = user.getPlaylists();
         length = calculateTotalLenght();
     }

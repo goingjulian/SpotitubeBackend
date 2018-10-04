@@ -1,4 +1,4 @@
-package nl.korfdegidts.components;
+package nl.korfdegidts.entity;
 
 public class Video extends Track {
     private String publicationDate;
