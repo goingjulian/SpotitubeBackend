@@ -1,7 +1,6 @@
 package nl.korfdegidts.entity;
 
 import nl.korfdegidts.authentication.UserCredentials;
-import nl.korfdegidts.authentication.UserToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,18 +9,18 @@ public class User {
     private List<Playlist> playlists = new ArrayList<>();
 
     private UserCredentials credentials;
-    private UserToken token;
+    private String token;
 
     public User(UserCredentials credentials) {
         this.credentials = credentials;
-        token = new UserToken(credentials.getUser(), generateToken());
+        token = generateToken();
     }
 
     public UserCredentials getCredentials() {
         return credentials;
     }
 
-    public UserToken getTokenObject() {
+    public String getToken() {
         return token;
     }
 
@@ -38,5 +37,9 @@ public class User {
 
     public void addPlaylist(int id, String name, boolean isOwner) {
         playlists.add(new Playlist(id, name, isOwner));
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

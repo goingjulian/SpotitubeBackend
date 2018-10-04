@@ -1,14 +1,14 @@
-package nl.korfdegidts.authentication;
+package nl.korfdegidts.dto;
 
-public class UserToken {
+public class TokenDTO {
     private String user;
     private String token;
 
-    public UserToken() {
+    public TokenDTO() {
     }
 
 
-    public UserToken(String user, String token) {
+    public TokenDTO(String user, String token) {
         this.user = user;
         this.token = token;
     }

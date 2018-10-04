@@ -12,7 +12,7 @@ import javax.inject.Named;
 @Named("hardCoded")
 public class LoginServiceHardCoded implements ILoginService {
     //Replace with db
-    private User hardCodedUser = new User(new UserCredentials("julian", "pass"));
+    User hardCodedUser = new User(new UserCredentials("julian", "pass"));
 
     public LoginServiceHardCoded() {
         hardCodedUser.addPlaylist(0, "Cool Songs", true);
@@ -37,13 +37,13 @@ public class LoginServiceHardCoded implements ILoginService {
     @Override
     public User getUserFromToken(String token) throws UserNotFoundException {
         //Replace with db
-        if (hardCodedUser.getTokenObject().getToken().equals(token)) return hardCodedUser;
+        if (hardCodedUser.getToken().equals(token)) return hardCodedUser;
 
         throw new UserNotFoundException();
     }
 
     @Override
-    public User loginUser(UserCredentials credentials) throws UserNotFoundException {
+    public User getUserFromCredentials(UserCredentials credentials) throws UserNotFoundException {
         //replace with db
         if (credentials.getUser().equals(hardCodedUser.getCredentials().getUser())
                 && credentials.getPassword().equals(hardCodedUser.getCredentials().getPassword()))
