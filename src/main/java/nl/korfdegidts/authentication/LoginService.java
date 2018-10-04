@@ -8,13 +8,13 @@ import nl.korfdegidts.exception.UserNotFoundException;
 
 public class LoginService {
     //Replace with db
-    private User hardCodedUser = new User(new LoginCredentials("julian", "pass"));
+    private User hardCodedUser = new User(new UserCredentials("julian", "pass"));
 
     public LoginService() {
-        hardCodedUser.addPlaylist(0, "Cool Songs");
-        hardCodedUser.addPlaylist(1, "Hipster Songs");
-        hardCodedUser.addPlaylist(2, "Sad Songs");
-        hardCodedUser.addPlaylist(3, "Great Songs");
+        hardCodedUser.addPlaylist(0, "Cool Songs", true);
+        hardCodedUser.addPlaylist(1, "Hipster Songs", true);
+        hardCodedUser.addPlaylist(2, "Sad Songs", false);
+        hardCodedUser.addPlaylist(3, "Great Songs", true);
 
         Track sunshineSong = new Song(0, "Sunshine", "Pietje Pietersen",
                 254, "Songs of shine", 3, true);
@@ -30,7 +30,7 @@ public class LoginService {
         hardCodedUser.getPlaylists().get(2).addTrack(rainVideo);
     }
 
-    public User loginUser(LoginCredentials credentials) throws UserNotFoundException {
+    public User loginUser(UserCredentials credentials) throws UserNotFoundException {
         User user = getUserFromCredentials(credentials);
         if (user != null) {
             return user;
@@ -39,7 +39,7 @@ public class LoginService {
         }
     }
 
-    private User getUserFromCredentials(LoginCredentials credentials) {
+    private User getUserFromCredentials(UserCredentials credentials) {
         //replace with db
         if (credentials.getUser().equals(hardCodedUser.getCredentials().getUser())
                 && credentials.getPassword().equals(hardCodedUser.getCredentials().getPassword()))

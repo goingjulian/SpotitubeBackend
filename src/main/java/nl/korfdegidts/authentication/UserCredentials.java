@@ -1,13 +1,13 @@
 package nl.korfdegidts.authentication;
 
-public class LoginCredentials {
+public class UserCredentials {
     private String user;
     private String password;
 
-    public LoginCredentials() {
+    public UserCredentials() {
     }
 
-    public LoginCredentials(String user, String password) {
+    public UserCredentials(String user, String password) {
         this.user = user;
         this.password = password;
     }
