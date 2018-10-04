@@ -1,16 +1,20 @@
-package nl.korfdegidts.authentication;
+package nl.korfdegidts.service;
 
+import nl.korfdegidts.authentication.UserCredentials;
 import nl.korfdegidts.entity.Song;
 import nl.korfdegidts.entity.Track;
 import nl.korfdegidts.entity.User;
 import nl.korfdegidts.entity.Video;
 import nl.korfdegidts.exception.UserNotFoundException;
 
-public class LoginService {
+import javax.inject.Named;
+
+@Named("hardCoded")
+public class LoginServiceHardCoded implements ILoginService {
     //Replace with db
     private User hardCodedUser = new User(new UserCredentials("julian", "pass"));
 
-    public LoginService() {
+    public LoginServiceHardCoded() {
         hardCodedUser.addPlaylist(0, "Cool Songs", true);
         hardCodedUser.addPlaylist(1, "Hipster Songs", true);
         hardCodedUser.addPlaylist(2, "Sad Songs", false);
@@ -30,27 +34,20 @@ public class LoginService {
         hardCodedUser.getPlaylists().get(2).addTrack(rainVideo);
     }
 
-    public User loginUser(UserCredentials credentials) throws UserNotFoundException {
-        User user = getUserFromCredentials(credentials);
-        if (user != null) {
-            return user;
-        } else {
-            throw new UserNotFoundException();
-        }
+    @Override
+    public User getUserFromToken(String token) throws UserNotFoundException {
+        //Replace with db
+        if (hardCodedUser.getTokenObject().getToken().equals(token)) return hardCodedUser;
+
+        throw new UserNotFoundException();
     }
 
-    private User getUserFromCredentials(UserCredentials credentials) {
+    @Override
+    public User loginUser(UserCredentials credentials) throws UserNotFoundException {
         //replace with db
         if (credentials.getUser().equals(hardCodedUser.getCredentials().getUser())
                 && credentials.getPassword().equals(hardCodedUser.getCredentials().getPassword()))
             return hardCodedUser;
-
-        return null;
-    }
-
-    public User getUserFromToken(String token) throws UserNotFoundException {
-        //Replace with db
-        if (hardCodedUser.getTokenObject().getToken().equals(token)) return hardCodedUser;
 
         throw new UserNotFoundException();
     }

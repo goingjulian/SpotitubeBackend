@@ -1,10 +1,11 @@
 package nl.korfdegidts.controller;
 
-import nl.korfdegidts.authentication.LoginService;
 import nl.korfdegidts.dto.TracksDTO;
 import nl.korfdegidts.entity.User;
 import nl.korfdegidts.exception.UserNotFoundException;
+import nl.korfdegidts.service.ILoginService;
 
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -13,10 +14,12 @@ import javax.ws.rs.core.Response;
 
 @Path("/playlists")
 public class TrackController {
-    private LoginService loginService = new LoginService();
+
+    @Inject
+    private ILoginService ILoginService;
 
 //    @Inject
-//    public TrackController(LoginService loginService) {
+//    public TrackController(LoginServiceHardCoded loginService) {
 //        this.loginService = loginService;
 //    }
 
@@ -24,7 +27,7 @@ public class TrackController {
     @Path("/{id}/tracks")
     public Response getTracksFromPlaylist(@PathParam("id") int id, @QueryParam("token") String token) {
         try {
-            User foundUser = loginService.getUserFromToken(token);
+            User foundUser = ILoginService.getUserFromToken(token);
             return Response.status(Response.Status.OK).entity(
                     new TracksDTO(foundUser.getPlaylists().get(id).getTracks())
             ).build();

@@ -5,7 +5,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-public class LoginServiceTest {
+public class LoginServiceHardCodedTest {
 
     @Rule
     private ExpectedException thrown = ExpectedException.none();
