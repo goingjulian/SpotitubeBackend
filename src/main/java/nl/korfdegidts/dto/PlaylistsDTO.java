@@ -1,38 +1,18 @@
 package nl.korfdegidts.dto;
 
 import nl.korfdegidts.entity.Playlist;
-import nl.korfdegidts.entity.Track;
 import nl.korfdegidts.entity.User;
 
 import java.util.List;
 
 public class PlaylistsDTO {
     private List<Playlist> playlists;
+
     private int length;
 
-    public PlaylistsDTO(User user) {
+    public PlaylistsDTO(User user, int length) {
         playlists = user.getPlaylists();
-        length = calculateTotalLenght();
-    }
-
-    private int calculateTotalLenght() {
-        int total = 0;
-
-        for (Playlist playlist : playlists) {
-            total += calculateLengthOfAllTracks(playlist.getTracks());
-        }
-
-        return total;
-    }
-
-    private int calculateLengthOfAllTracks(List<Track> tracks) {
-        int total = 0;
-
-        for (Track track : tracks) {
-            total += track.getDuration();
-        }
-
-        return total;
+        this.length = length;
     }
 
     public List<Playlist> getPlaylists() {
@@ -41,5 +21,9 @@ public class PlaylistsDTO {
 
     public int getLength() {
         return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
     }
 }

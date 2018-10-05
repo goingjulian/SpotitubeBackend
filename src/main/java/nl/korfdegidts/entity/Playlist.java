@@ -8,7 +8,7 @@ public class Playlist {
 
     private String name;
     private boolean owner;
-    private List<Track> tracks = new ArrayList<>(); //remove??
+    private List<Track> tracks = new ArrayList<>();
 
     public Playlist(int id, String name, boolean owner) {
         this.name = name;

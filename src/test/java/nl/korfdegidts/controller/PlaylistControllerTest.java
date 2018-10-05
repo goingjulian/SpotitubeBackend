@@ -3,8 +3,7 @@ package nl.korfdegidts.controller;
 import nl.korfdegidts.authentication.UserCredentials;
 import nl.korfdegidts.entity.User;
 import nl.korfdegidts.exception.UserNotFoundException;
-import nl.korfdegidts.service.LoginServiceHardCoded;
-import org.junit.Before;
+import nl.korfdegidts.service.ILoginService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -23,12 +22,7 @@ public class PlaylistControllerTest {
     private PlaylistController sut;
 
     @Mock
-    private LoginServiceHardCoded loginService;
-
-    @Before
-    public void setUp() {
-        sut = new PlaylistController();
-    }
+    private ILoginService loginService;
 
     @Test
     public void testThatStatusForbiddenIsReturnedWhenTokenIsInvalid() throws UserNotFoundException {

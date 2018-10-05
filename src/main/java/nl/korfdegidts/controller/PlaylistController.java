@@ -4,6 +4,7 @@ import nl.korfdegidts.dto.PlaylistsDTO;
 import nl.korfdegidts.entity.User;
 import nl.korfdegidts.exception.UserNotFoundException;
 import nl.korfdegidts.service.ILoginService;
+import nl.korfdegidts.service.IPlaylistService;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -16,21 +17,27 @@ import javax.ws.rs.core.Response;
 @Path("/playlists")
 public class PlaylistController {
 
-    @Inject
-    private ILoginService ILoginService;
+    private ILoginService loginService;
+    private IPlaylistService playlistService;
 
-//    @Inject
-//    public PlaylistController(LoginServiceHardCoded loginService) {
-//        this.loginService = loginService;
-//    }
+    @Inject
+    public void setLoginService(ILoginService loginService) {
+        this.loginService = loginService;
+    }
+
+    @Inject
+    public void setPlaylistService(IPlaylistService playlistService) {
+        this.playlistService = playlistService;
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllPlaylistsFromUser(@QueryParam("token") String token) {
         try {
-            User foundUser = ILoginService.getUserFromToken(token);
+            User foundUser = loginService.getUserFromToken(token);
+
             return Response.status(Response.Status.OK).entity(
-                    new PlaylistsDTO(foundUser)
+                    new PlaylistsDTO(foundUser, playlistService.calculateTotalLength(foundUser.getPlaylists()))
             ).build();
         } catch (UserNotFoundException e) {
             return Response.status(Response.Status.FORBIDDEN).build();

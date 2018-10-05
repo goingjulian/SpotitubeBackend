@@ -4,7 +4,7 @@ import nl.korfdegidts.authentication.UserCredentials;
 import nl.korfdegidts.dto.TokenDTO;
 import nl.korfdegidts.entity.User;
 import nl.korfdegidts.exception.UserNotFoundException;
-import nl.korfdegidts.service.LoginServiceHardCoded;
+import nl.korfdegidts.service.ILoginService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +24,7 @@ public class LoginControllerTest {
     private LoginController sut = new LoginController();
 
     @Mock
-    private LoginServiceHardCoded loginService;
+    private ILoginService loginService;
 
     private User validUser;
     private UserCredentials validCredentials;

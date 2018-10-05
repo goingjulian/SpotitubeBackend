@@ -15,13 +15,12 @@ import javax.ws.rs.core.Response;
 @Path("/playlists")
 public class TrackController {
 
-    @Inject
     private ILoginService ILoginService;
 
-//    @Inject
-//    public TrackController(LoginServiceHardCoded loginService) {
-//        this.loginService = loginService;
-//    }
+    @Inject
+    public void setILoginService(nl.korfdegidts.service.ILoginService ILoginService) {
+        this.ILoginService = ILoginService;
+    }
 
     @GET
     @Path("/{id}/tracks")
