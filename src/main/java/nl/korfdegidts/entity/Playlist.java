@@ -7,7 +7,9 @@ public class Playlist {
     private int id;
 
     private String name;
+
     private boolean owner;
+
     private List<Track> tracks = new ArrayList<>();
 
     public Playlist(int id, String name, boolean owner) {
@@ -34,5 +36,9 @@ public class Playlist {
 
     public void addTrack(Track track) {
         tracks.add(track);
+    }
+
+    public void setTracks(List<Track> tracks) {
+        this.tracks = tracks;
     }
 }

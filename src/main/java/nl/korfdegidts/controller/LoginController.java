@@ -1,9 +1,6 @@
 package nl.korfdegidts.controller;
 
 import nl.korfdegidts.authentication.UserCredentials;
-import nl.korfdegidts.datasource.IDBConnection;
-import nl.korfdegidts.datasource.MySQLConnection;
-import nl.korfdegidts.datasource.PlaylistDao;
 import nl.korfdegidts.dto.TokenDTO;
 import nl.korfdegidts.entity.User;
 import nl.korfdegidts.exception.UserNotFoundException;
@@ -20,22 +17,19 @@ import javax.ws.rs.core.Response;
 @Path("/login")
 public class LoginController {
 
-    private ILoginService ILoginService;
+    private ILoginService loginService;
 
     @Inject
-    public void setILoginService(nl.korfdegidts.service.ILoginService ILoginService) {
-        this.ILoginService = ILoginService;
+    public void setLoginService(nl.korfdegidts.service.ILoginService loginService) {
+        this.loginService = loginService;
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(UserCredentials credentials) {
-        IDBConnection conn = new MySQLConnection();
-        PlaylistDao dao = new PlaylistDao(conn);
-        System.out.println(dao.getResult());
         try {
-            User foundUser = ILoginService.getUserFromCredentials(credentials);
+            User foundUser = loginService.getUserFromCredentials(credentials);
             return Response.status(Response.Status.CREATED).entity(
                     new TokenDTO(foundUser.getCredentials().getUser(), foundUser.getToken())
             ).build();

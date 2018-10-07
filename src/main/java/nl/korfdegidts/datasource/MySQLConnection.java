@@ -1,8 +1,6 @@
 package nl.korfdegidts.datasource;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class MySQLConnection implements IDBConnection {
     private Connection connection = null;
@@ -29,5 +27,15 @@ public class MySQLConnection implements IDBConnection {
     @Override
     public Connection getConnection() {
         return connection;
+    }
+
+    @Override
+    public ResultSet performSQL(String sql) {
+        try {
+            Statement st = connection.createStatement();
+            return st.executeQuery(sql);
+        } catch (SQLException e) {
+            return null;
+        }
     }
 }

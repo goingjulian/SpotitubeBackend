@@ -1,7 +1,6 @@
 package nl.korfdegidts.dto;
 
 import nl.korfdegidts.entity.Playlist;
-import nl.korfdegidts.entity.User;
 
 import java.util.List;
 
@@ -10,8 +9,8 @@ public class PlaylistsDTO {
 
     private int length;
 
-    public PlaylistsDTO(User user, int length) {
-        playlists = user.getPlaylists();
+    public PlaylistsDTO(List<Playlist> playlists, int length) {
+        this.playlists = playlists;
         this.length = length;
     }
 

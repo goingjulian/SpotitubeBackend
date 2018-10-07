@@ -6,6 +6,6 @@
                       http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
         bean-discovery-mode="all">
     <!--<alternatives>-->
-    <!--<class>nl.korfdegidts.service.ILoginService</class>-->
+    <!--<class>nl.korfdegidts.service.loginService</class>-->
     <!--</alternatives>-->
 </beans>
