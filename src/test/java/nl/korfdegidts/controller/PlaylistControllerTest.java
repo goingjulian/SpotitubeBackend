@@ -1,7 +1,5 @@
 package nl.korfdegidts.controller;
 
-import nl.korfdegidts.authentication.UserCredentials;
-import nl.korfdegidts.entity.User;
 import nl.korfdegidts.exception.UserNotFoundException;
 import nl.korfdegidts.service.ILoginService;
 import org.junit.Test;
@@ -35,15 +33,15 @@ public class PlaylistControllerTest {
         assertEquals(Response.Status.FORBIDDEN.getStatusCode(), response.getStatus());
     }
 
-    @Test
-    public void testThatStatusOKIsReturnedWhenTokenIsValid() throws UserNotFoundException {
-        Mockito.when(loginService.getUserFromToken("1234-1234-1234")).thenReturn(
-                new User(new UserCredentials("test", "pass"))
-        );
-
-        Response response = sut.getAllPlaylistsFromUser("1234-1234-1234");
-
-        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-    }
+//    @Test
+//    public void testThatStatusOKIsReturnedWhenTokenIsValid() throws UserNotFoundException {
+//        Mockito.when(loginService.getUserFromToken("1234-1234-1234")).thenReturn(
+//                new User(new UserCredentials("test", "pass"))
+//        );
+//
+//        Response response = sut.getAllPlaylistsFromUser("1234-1234-1234");
+//
+//        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+//    }
 
 }

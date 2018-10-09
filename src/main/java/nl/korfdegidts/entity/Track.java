@@ -1,6 +1,6 @@
 package nl.korfdegidts.entity;
 
-public class Track {
+public class Track implements IEntity {
 
     private int id;
 

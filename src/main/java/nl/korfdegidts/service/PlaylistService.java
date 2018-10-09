@@ -5,30 +5,29 @@ import nl.korfdegidts.entity.Playlist;
 import nl.korfdegidts.entity.Track;
 import nl.korfdegidts.entity.User;
 
-import java.sql.SQLException;
+import javax.inject.Inject;
 import java.util.List;
 
 public class PlaylistService implements IPlaylistService {
     private PlaylistDAO dao = new PlaylistDAO();
 
+    @Inject
+    public void setDao(PlaylistDAO dao) {
+        this.dao = dao;
+    }
+
     @Override
     public List<Playlist> getAllPlaylistsFromUser(User user) {
-        try {
-            return dao.getAllPlaylistsFromUser(user);
-        } catch (SQLException e) {
-            System.out.println("Error with SQL");
-            e.printStackTrace();
-            return null;
-        }
+        return dao.getAllPlaylistsFromUser(user);
     }
 
     @Override
     public int calculateTotalLength(List<Playlist> playlists) {
         int total = 0;
 
-//        for (Playlist playlist : playlists) {
-//            total += calcualteTotalLengthOfAllTracks(playlist.getTracks());
-//        }
+        for (Playlist playlist : playlists) {
+            total += calcualteTotalLengthOfAllTracks(playlist.getTracks());
+        }
 
         return total;
     }

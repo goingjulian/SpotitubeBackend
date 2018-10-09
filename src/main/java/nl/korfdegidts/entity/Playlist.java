@@ -3,7 +3,7 @@ package nl.korfdegidts.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Playlist {
+public class Playlist implements IEntity {
     private int id;
 
     private String name;

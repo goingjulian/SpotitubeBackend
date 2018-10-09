@@ -38,7 +38,7 @@ public class TrackController {
                     new TracksDTO(trackService.getTracksFromPlaylist(id))
             ).build();
         } catch (UserNotFoundException e) {
-            return Response.status(Response.Status.FORBIDDEN).build();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
 

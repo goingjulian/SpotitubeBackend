@@ -1,8 +1,6 @@
 package nl.korfdegidts.controller;
 
 import nl.korfdegidts.authentication.UserCredentials;
-import nl.korfdegidts.dto.TokenDTO;
-import nl.korfdegidts.entity.User;
 import nl.korfdegidts.exception.UserNotFoundException;
 import nl.korfdegidts.service.ILoginService;
 
@@ -20,7 +18,7 @@ public class LoginController {
     private ILoginService loginService;
 
     @Inject
-    public void setLoginService(nl.korfdegidts.service.ILoginService loginService) {
+    public void setLoginService(ILoginService loginService) {
         this.loginService = loginService;
     }
 
@@ -29,9 +27,10 @@ public class LoginController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(UserCredentials credentials) {
         try {
-            User foundUser = loginService.getUserFromCredentials(credentials);
+//            User foundUser = loginService.getUserFromCredentials(credentials);
             return Response.status(Response.Status.CREATED).entity(
-                    new TokenDTO(foundUser.getCredentials().getUser(), foundUser.getToken())
+                    loginService.getTokenDTOFromCredentials(credentials)
+//                    new TokenDTO(foundUser.getCredentials().getUser(), "1234-1234-1234")
             ).build();
         } catch (UserNotFoundException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();

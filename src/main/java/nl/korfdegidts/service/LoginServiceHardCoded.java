@@ -1,31 +1,42 @@
 package nl.korfdegidts.service;
 
 import nl.korfdegidts.authentication.UserCredentials;
+import nl.korfdegidts.datamapper.TokenDAO;
+import nl.korfdegidts.datamapper.UserDAO;
+import nl.korfdegidts.dto.TokenDTO;
+import nl.korfdegidts.entity.Token;
 import nl.korfdegidts.entity.User;
 import nl.korfdegidts.exception.UserNotFoundException;
 
-import javax.inject.Named;
+import javax.inject.Inject;
 
-@Named("hardCoded")
 public class LoginServiceHardCoded implements ILoginService {
-    //Replace with db
-    User hardCodedUser = new User(new UserCredentials("julian", "pass"));
+
+    private UserDAO dao;
+    private TokenDAO tokenDAO;
+
+    @Inject
+    public void setDao(UserDAO dao) {
+        this.dao = dao;
+    }
+
+    @Inject
+    public void setTokenDAO(TokenDAO tokenDAO) {
+        this.tokenDAO = tokenDAO;
+    }
 
     @Override
     public User getUserFromToken(String token) throws UserNotFoundException {
-        //Replace with db
-        if (hardCodedUser.getToken().equals(token)) return hardCodedUser;
-
-        throw new UserNotFoundException();
+        return dao.getUserFromToken(token);
     }
 
     @Override
-    public User getUserFromCredentials(UserCredentials credentials) throws UserNotFoundException {
-        //replace with db
-        if (credentials.getUser().equals(hardCodedUser.getCredentials().getUser())
-                && credentials.getPassword().equals(hardCodedUser.getCredentials().getPassword()))
-            return hardCodedUser;
-
-        throw new UserNotFoundException();
+    public TokenDTO getTokenDTOFromCredentials(UserCredentials credentials) throws UserNotFoundException {
+        User user = dao.getUserFromCredentials(credentials);
+        Token token = tokenDAO.getNewUserToken(credentials);
+        System.out.println("pass");
+        return new TokenDTO(user.getCredentials().getUser(), token.getToken());
     }
+
+
 }

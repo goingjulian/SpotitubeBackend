@@ -42,7 +42,7 @@ public class PlaylistController {
                     new PlaylistsDTO(playlists, playlistService.calculateTotalLength(playlists))
             ).build();
         } catch (UserNotFoundException e) {
-            return Response.status(Response.Status.FORBIDDEN).build();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
 }

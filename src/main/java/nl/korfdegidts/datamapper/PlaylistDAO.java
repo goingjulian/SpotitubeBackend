@@ -3,6 +3,7 @@ package nl.korfdegidts.datamapper;
 import nl.korfdegidts.entity.Playlist;
 import nl.korfdegidts.entity.User;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,32 +12,43 @@ import java.util.List;
 
 public class PlaylistDAO extends DataMapper {
 
-    public List<Playlist> getAllPlaylistsFromUser(User user) throws SQLException {
+    public List<Playlist> getAllPlaylistsFromUser(User user) {
+        try (
+                Connection connection = factory.getMysqlConnection().getConnection();
 
-        String token = user.getToken();
-        System.out.println(token);
+                PreparedStatement stmnt = connection.prepareStatement(
+                        "SELECT playlist_id, name, owner " +
+                                "FROM playlist p " +
+                                "INNER JOIN user u " +
+                                "ON p.user_id = u.user_id " +
+                                "INNER JOIN token t " +
+                                "ON t.username = u.username " +
+                                "WHERE u.username = ? ")
+        ) {
+            stmnt.setString(1, user.getCredentials().getUser());
 
-        PreparedStatement stmnt = connection.getConnection().prepareStatement(
-                "SELECT playlist_id, name, owner, token " +
-                        "FROM playlist p " +
-                        "INNER JOIN user u " +
-                        "ON p.user_id = u.user_id " +
-                        "WHERE u.token = ?");
+            ResultSet rs = stmnt.executeQuery();
 
-        stmnt.setString(1, token);
+            List<Playlist> playlists = new ArrayList<>();
 
-        ResultSet rs = stmnt.executeQuery();
+            while (rs.next()) {
+                playlists.add(mapResult(rs));
+            }
 
-        List<Playlist> playlists = new ArrayList<>();
-
-        while (rs.next()) {
-            playlists.add(new Playlist(
-                    rs.getInt("playlist_id"),
-                    rs.getString("name"),
-                    rs.getBoolean("owner"))
-            );
+            return playlists;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
-        return playlists;
+
+    }
+
+    @Override
+    protected Playlist mapResult(ResultSet rs) throws SQLException {
+        return new Playlist(
+                rs.getInt("playlist_id"),
+                rs.getString("name"),
+                rs.getBoolean("owner")
+        );
     }
 }

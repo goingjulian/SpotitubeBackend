@@ -5,15 +5,14 @@ import nl.korfdegidts.authentication.UserCredentials;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
-    private List<Playlist> playlists = new ArrayList<>();
+public class User implements IEntity {
+    private List<Playlist> playlists = new ArrayList<>(); //REMOVE
 
     private UserCredentials credentials;
     private String token;
 
     public User(UserCredentials credentials) {
         this.credentials = credentials;
-        token = generateToken();
     }
 
     public UserCredentials getCredentials() {
@@ -22,13 +21,6 @@ public class User {
 
     public String getToken() {
         return token;
-    }
-
-    /**
-     * Replace with DB!!!
-     */
-    private String generateToken() {
-        return "1234-1234-1234";
     }
 
     public List<Playlist> getPlaylists() {
