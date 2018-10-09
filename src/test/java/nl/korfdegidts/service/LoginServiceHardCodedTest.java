@@ -6,11 +6,11 @@ public class LoginServiceHardCodedTest {
 //    @Rule
 //    public ExpectedException thrown = ExpectedException.none();
 //
-//    private LoginServiceHardCoded loginService;
+//    private LoginService loginService;
 //
 //    @Before
 //    public void setUp() {
-//        loginService = new LoginServiceHardCoded();
+//        loginService = new LoginService();
 //        loginService.hardCodedUser = new User(new UserCredentials("barry", "pass"));
 //    }
 //

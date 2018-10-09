@@ -10,7 +10,7 @@ import nl.korfdegidts.exception.UserNotFoundException;
 
 import javax.inject.Inject;
 
-public class LoginServiceHardCoded implements ILoginService {
+public class LoginService implements ILoginService {
 
     private UserDAO dao;
     private TokenDAO tokenDAO;
@@ -34,7 +34,6 @@ public class LoginServiceHardCoded implements ILoginService {
     public TokenDTO getTokenDTOFromCredentials(UserCredentials credentials) throws UserNotFoundException {
         User user = dao.getUserFromCredentials(credentials);
         Token token = tokenDAO.getNewUserToken(credentials);
-        System.out.println("pass");
         return new TokenDTO(user.getCredentials().getUser(), token.getToken());
     }
 

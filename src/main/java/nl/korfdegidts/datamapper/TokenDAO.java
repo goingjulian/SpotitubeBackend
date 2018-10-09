@@ -13,15 +13,32 @@ public class TokenDAO extends DataMapper {
 
     private static final int TOKEN_PAIR_AMOUNT = 4;
     private static final int MAX_PAIR_VALUE = 9999;
+    private static final int TIME_IM_MS = 7200000;
+    private static final int MAX_TRIES = 3;
 
     public Token getNewUserToken(UserCredentials credentials) {
         deleteOldTokens(credentials);
 
+        String tokenStr = generateUniqueToken();
+
+        int tries = 0;
+        while (tokenAlreadyTaken(tokenStr)) {
+
+            if (tries >= MAX_TRIES) {
+                throw new AllTokensOccupiedException(
+                        "No unique tokens found, make sure that the number range is sufficient enough"
+                );
+            } else {
+                tokenStr = generateUniqueToken();
+                tries++;
+            }
+
+        }
+
         Token token = new Token(credentials.getUser(), generateUniqueToken(), getExpiryDate());
 
-        System.out.println(token.getToken());
-        System.out.println(token.getExpiryDate());
         addNewTokenToUser(token);
+
         return token;
     }
 
@@ -38,7 +55,6 @@ public class TokenDAO extends DataMapper {
             stmnt.setLong(3, token.getExpiryDate());
 
             stmnt.execute();
-            System.out.println("stmnt executed");
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -54,7 +70,6 @@ public class TokenDAO extends DataMapper {
         ) {
             stmnt.setString(1, credentials.getUser());
             stmnt.execute();
-            System.out.println("stmnt2 executed");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -62,12 +77,7 @@ public class TokenDAO extends DataMapper {
 
     private long getExpiryDate() {
         long currentTime = System.currentTimeMillis();
-        long expiryDate = currentTime + (2 * (60 * 60));
-        System.out.println("exp");
-        System.out.println(expiryDate - currentTime);
-
-        System.out.println(expiryDate);
-        return expiryDate;
+        return currentTime + TIME_IM_MS;
 
     }
 
@@ -88,6 +98,7 @@ public class TokenDAO extends DataMapper {
     }
 
     private String generateUniqueToken() {
+
         Random rand = new Random();
 
         StringBuilder randomToken = new StringBuilder();
@@ -96,14 +107,8 @@ public class TokenDAO extends DataMapper {
             randomToken.append(Integer.toString(rand.nextInt(MAX_PAIR_VALUE)));
         }
 
-        String token = randomToken.toString();
+        return randomToken.toString();
 
-        if (tokenAlreadyTaken(token)) {
-            generateUniqueToken();
-            return null;
-        } else {
-            return token;
-        }
     }
 
     private boolean resultsEmpty(ResultSet rs) throws SQLException {
@@ -113,11 +118,6 @@ public class TokenDAO extends DataMapper {
 
     @Override
     protected Token mapResult(ResultSet rs) {
-//        return new Token(
-//                rs.getInt("user_id"),
-//                rs.getString("token"),
-//                rs.getDate("expiryDate")
-//        );
         return null;
     }
 }

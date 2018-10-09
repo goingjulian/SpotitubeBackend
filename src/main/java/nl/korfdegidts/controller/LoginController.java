@@ -27,10 +27,8 @@ public class LoginController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(UserCredentials credentials) {
         try {
-//            User foundUser = loginService.getUserFromCredentials(credentials);
             return Response.status(Response.Status.CREATED).entity(
                     loginService.getTokenDTOFromCredentials(credentials)
-//                    new TokenDTO(foundUser.getCredentials().getUser(), "1234-1234-1234")
             ).build();
         } catch (UserNotFoundException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();

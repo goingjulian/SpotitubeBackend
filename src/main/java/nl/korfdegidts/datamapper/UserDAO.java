@@ -40,7 +40,7 @@ public class UserDAO extends DataMapper {
         try (
                 Connection connection = factory.getMysqlConnection().getConnection();
                 PreparedStatement stmnt = connection.prepareStatement(
-                        "SELECT u.username, password " +
+                        "SELECT u.username, password, t.expiryDate " +
                                 "FROM user u " +
                                 "INNER JOIN token t " +
                                 "ON u.username = t.username " +
@@ -52,7 +52,7 @@ public class UserDAO extends DataMapper {
 
             rs.next();
 
-            if (resultsEmpty(rs)) {
+            if (resultsEmpty(rs) || tokenExpired(rs)) {
                 throw new UserNotFoundException();
             } else {
                 rs.first();
@@ -62,6 +62,10 @@ public class UserDAO extends DataMapper {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private boolean tokenExpired(ResultSet rs) throws SQLException {
+        return rs.getLong("expiryDate") <= System.currentTimeMillis();
     }
 
     public void persistNewUser(User user) {
