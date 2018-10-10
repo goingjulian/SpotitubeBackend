@@ -51,7 +51,7 @@ public class TrackDAO extends DataMapper {
                 rs.getBoolean("offlineAvailable"),
                 rs.getString("album"),
                 rs.getString("description"),
-                "02-02-1992"
+                rs.getString("publication_date")
         );
     }
 }

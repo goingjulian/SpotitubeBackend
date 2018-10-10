@@ -10,7 +10,7 @@ public class Track implements IEntity {
 
     private int duration;
 
-    private int playCount;
+    private int playcount;
 
     private boolean offlineAvailable;
 
@@ -18,23 +18,23 @@ public class Track implements IEntity {
 
     private String description;
 
-    private String publication_date;
+    private String publicationDate;
 
     public Track() {
     }
 
     public Track(int id, String title, String performer, int duration,
-                 int playCount, boolean offlineAvailable, String album,
-                 String description, String publication_date) {
+                 int playcount, boolean offlineAvailable, String album,
+                 String description, String publicationDate) {
         this.id = id;
         this.title = title;
         this.performer = performer;
         this.duration = duration;
-        this.playCount = playCount;
+        this.playcount = playcount;
         this.offlineAvailable = offlineAvailable;
         this.album = album;
         this.description = description;
-        this.publication_date = publication_date;
+        this.publicationDate = publicationDate;
     }
 
     public String getPerformer() {
@@ -57,12 +57,12 @@ public class Track implements IEntity {
         return id;
     }
 
-    public int getPlayCount() {
-        return playCount;
+    public int getPlaycount() {
+        return playcount;
     }
 
-    public void setPlayCount(int playCount) {
-        this.playCount = playCount;
+    public void setPlaycount(int playcount) {
+        this.playcount = playcount;
     }
 
     public String getAlbum() {
@@ -81,12 +81,12 @@ public class Track implements IEntity {
         this.description = description;
     }
 
-    public String getPublication_date() {
-        return publication_date;
+    public String getPublicationDate() {
+        return publicationDate;
     }
 
-    public void setPublication_date(String publication_date) {
-        this.publication_date = publication_date;
+    public void setPublicationDate(String publicationDate) {
+        this.publicationDate = publicationDate;
     }
 
     public void setId(int id) {

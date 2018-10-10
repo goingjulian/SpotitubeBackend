@@ -3,6 +3,7 @@ package nl.korfdegidts.datamapper;
 import nl.korfdegidts.entity.Playlist;
 import nl.korfdegidts.entity.User;
 
+import javax.inject.Inject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlaylistDAO extends DataMapper {
+
+    private TrackDAO trackDAO;
+
+    @Inject
+    public void setTrackDAO(TrackDAO trackDAO) {
+        this.trackDAO = trackDAO;
+    }
 
     public List<Playlist> getAllPlaylistsFromUser(User user) {
         try (
@@ -32,7 +40,10 @@ public class PlaylistDAO extends DataMapper {
             List<Playlist> playlists = new ArrayList<>();
 
             while (rs.next()) {
-                playlists.add(mapResult(rs));
+                Playlist playlist = mapResult(rs);
+                playlist.setTracks(trackDAO.getAllTracksInPlaylist(playlist.getId()));
+
+                playlists.add(playlist);
             }
 
             return playlists;
