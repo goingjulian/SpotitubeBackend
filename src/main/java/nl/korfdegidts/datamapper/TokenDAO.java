@@ -2,6 +2,7 @@ package nl.korfdegidts.datamapper;
 
 import nl.korfdegidts.authentication.UserCredentials;
 import nl.korfdegidts.entity.Token;
+import nl.korfdegidts.exception.AllTokensOccupiedException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -44,7 +45,7 @@ public class TokenDAO extends DataMapper {
 
     private void addNewTokenToUser(Token token) {
         try (
-                Connection connection = factory.getMysqlConnection().getConnection();
+                Connection connection = factory.getDBConnection().getConnection();
                 PreparedStatement stmnt = connection.prepareStatement(
                         "INSERT INTO token (username, token, expiryDate) VALUES (?, ?, ?)"
                 )
@@ -63,7 +64,7 @@ public class TokenDAO extends DataMapper {
 
     private void deleteOldTokens(UserCredentials credentials) {
         try (
-                Connection connection = factory.getMysqlConnection().getConnection();
+                Connection connection = factory.getDBConnection().getConnection();
                 PreparedStatement stmnt = connection.prepareStatement(
                         "DELETE FROM token WHERE username = ?"
                 )
@@ -83,7 +84,7 @@ public class TokenDAO extends DataMapper {
 
     private boolean tokenAlreadyTaken(String token) {
         try (
-                Connection connection = factory.getMysqlConnection().getConnection();
+                Connection connection = factory.getDBConnection().getConnection();
                 PreparedStatement stmnt = connection.prepareStatement(
                         "SELECT token FROM token WHERE token = ?"
                 )

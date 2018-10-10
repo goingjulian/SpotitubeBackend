@@ -1,4 +1,4 @@
-package nl.korfdegidts.datamapper;
+package nl.korfdegidts.exception;
 
 public class AllTokensOccupiedException extends RuntimeException {
 

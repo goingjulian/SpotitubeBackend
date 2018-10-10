@@ -13,7 +13,7 @@ public class UserDAO extends DataMapper {
 
     public User getUserFromCredentials(UserCredentials credentials) throws UserNotFoundException {
         try (
-                Connection connection = factory.getMysqlConnection().getConnection();
+                Connection connection = factory.getDBConnection().getConnection();
                 PreparedStatement stmnt = connection.prepareStatement(
                         "SELECT username, password " +
                                 "FROM user " +
@@ -38,7 +38,7 @@ public class UserDAO extends DataMapper {
 
     public User getUserFromToken(String token) throws UserNotFoundException {
         try (
-                Connection connection = factory.getMysqlConnection().getConnection();
+                Connection connection = factory.getDBConnection().getConnection();
                 PreparedStatement stmnt = connection.prepareStatement(
                         "SELECT u.username, password, t.expiryDate " +
                                 "FROM user u " +
@@ -70,7 +70,7 @@ public class UserDAO extends DataMapper {
 
     public void persistNewUser(User user) {
         try (
-                Connection connection = factory.getMysqlConnection().getConnection();
+                Connection connection = factory.getDBConnection().getConnection();
                 PreparedStatement stmnt = connection.prepareStatement("INSERT INTO user (user, password) VALUES (?, ?)")
 
         ) {

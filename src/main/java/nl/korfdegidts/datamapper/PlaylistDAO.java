@@ -22,7 +22,7 @@ public class PlaylistDAO extends DataMapper {
 
     public List<Playlist> getAllPlaylistsFromUser(User user) {
         try (
-                Connection connection = factory.getMysqlConnection().getConnection();
+                Connection connection = factory.getDBConnection().getConnection();
 
                 PreparedStatement stmnt = connection.prepareStatement(
                         "SELECT playlist_id, name, owner " +

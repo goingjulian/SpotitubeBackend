@@ -1,10 +1,8 @@
-package nl.korfdegidts.datasource;
+package nl.korfdegidts.connection;
 
 import java.sql.Connection;
 
 public interface IDBConnection {
-
-    void connect();
 
     Connection getConnection();
 }

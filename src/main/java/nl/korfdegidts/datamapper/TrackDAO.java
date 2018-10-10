@@ -13,7 +13,7 @@ public class TrackDAO extends DataMapper {
 
     public List<Track> getAllTracksInPlaylist(int playlistId) {
         try (
-                Connection connection = factory.getMysqlConnection().getConnection();
+                Connection connection = factory.getDBConnection().getConnection();
 
                 PreparedStatement stmnt = connection.prepareStatement(
                         "SELECT track_id, title, performer, duration, playcount, offlineAvailable, album, description, publication_date " +
