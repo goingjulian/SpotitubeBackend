@@ -3,7 +3,6 @@ package nl.korfdegidts.datamapper;
 import nl.korfdegidts.entity.Playlist;
 import nl.korfdegidts.entity.User;
 
-import javax.inject.Inject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,13 +12,6 @@ import java.util.List;
 
 public class PlaylistDAO extends DataMapper {
 
-    private TrackDAO trackDAO;
-
-    @Inject
-    public void setTrackDAO(TrackDAO trackDAO) {
-        this.trackDAO = trackDAO;
-    }
-
     public List<Playlist> getAllPlaylistsFromUser(User user) {
         try (
                 Connection connection = factory.getDBConnection().getConnection();
@@ -28,7 +20,7 @@ public class PlaylistDAO extends DataMapper {
                         "SELECT playlist_id, name, owner " +
                                 "FROM playlist p " +
                                 "INNER JOIN user u " +
-                                "ON p.user_id = u.user_id " +
+                                "ON p.username = u.username " +
                                 "INNER JOIN token t " +
                                 "ON t.username = u.username " +
                                 "WHERE u.username = ? ")
@@ -41,7 +33,6 @@ public class PlaylistDAO extends DataMapper {
 
             while (rs.next()) {
                 Playlist playlist = mapResult(rs);
-                playlist.setTracks(trackDAO.getAllTracksInPlaylist(playlist.getId()));
 
                 playlists.add(playlist);
             }
@@ -50,8 +41,50 @@ public class PlaylistDAO extends DataMapper {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    public void persistNewPlaylist(Playlist playlist, String username) {
+        try (
+                Connection connection = factory.getDBConnection().getConnection();
 
+                PreparedStatement stmnt = connection.prepareStatement(
+                        "INSERT INTO playlist (name, owner, username) " +
+                                "VALUES (?, ?, ?)")
+        ) {
+            stmnt.setString(1, playlist.getName());
+            stmnt.setBoolean(2, true);
+            stmnt.setString(3, username);
+
+            stmnt.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deletePlaylist(int playlistId) {
+        try (
+                Connection connection = factory.getDBConnection().getConnection();
+                PreparedStatement stmnt = connection.prepareStatement("DELETE FROM playlist WHERE playlist_id = ?")
+        ) {
+            stmnt.setInt(1, playlistId);
+            stmnt.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void editPlaylist(Playlist playlist) {
+        try (
+                Connection connection = factory.getDBConnection().getConnection();
+                PreparedStatement stmnt = connection.prepareStatement("UPDATE playlist SET name = ? WHERE playlist_id = ?")
+        ) {
+            stmnt.setString(1, playlist.getName());
+            stmnt.setInt(2, playlist.getId());
+            stmnt.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

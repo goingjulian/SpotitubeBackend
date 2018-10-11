@@ -2,7 +2,6 @@ package nl.korfdegidts.service;
 
 import nl.korfdegidts.datamapper.PlaylistDAO;
 import nl.korfdegidts.entity.Playlist;
-import nl.korfdegidts.entity.Track;
 import nl.korfdegidts.entity.User;
 
 import javax.inject.Inject;
@@ -22,24 +21,19 @@ public class PlaylistService implements IPlaylistService {
     }
 
     @Override
-    public int calculateTotalLength(List<Playlist> playlists) {
-        int total = 0;
-
-        for (Playlist playlist : playlists) {
-            total += calcualteTotalLengthOfAllTracks(playlist.getTracks());
-        }
-
-        return total;
+    public void persistNewPlaylist(Playlist playlist, String username) {
+        dao.persistNewPlaylist(playlist, username);
     }
 
     @Override
-    public int calcualteTotalLengthOfAllTracks(List<Track> tracks) {
-        int total = 0;
-
-        for (Track track : tracks) {
-            total += track.getDuration();
-        }
-
-        return total;
+    public void deletePlaylist(int playlistId) {
+        dao.deletePlaylist(playlistId);
     }
+
+    @Override
+    public void editPlaylistName(Playlist playlist) {
+        dao.editPlaylist(playlist);
+    }
+
+
 }

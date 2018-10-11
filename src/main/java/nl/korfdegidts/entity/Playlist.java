@@ -12,6 +12,9 @@ public class Playlist implements IEntity {
 
     private List<Track> tracks = new ArrayList<>();
 
+    public Playlist() {
+    }
+
     public Playlist(int id, String name, boolean owner) {
         this.name = name;
         this.owner = owner;
@@ -40,5 +43,17 @@ public class Playlist implements IEntity {
 
     public void setTracks(List<Track> tracks) {
         this.tracks = tracks;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setOwner(boolean owner) {
+        this.owner = owner;
     }
 }
