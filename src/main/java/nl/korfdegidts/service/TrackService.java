@@ -27,6 +27,16 @@ public class TrackService implements ITrackService {
 
     @Override
     public int getTotalLengthOfAllTracks(User user) {
-        return dao.getTotalLengthOfAllTracks(user.getCredentials().getUser());
+        return dao.getTotalLengthOfAllTracksInPlaylist(user.getCredentials().getUser());
+    }
+
+    @Override
+    public void addTrackToPlaylist(int playlistId, Track track) {
+        dao.addTrackToPlaylist(playlistId, track);
+    }
+
+    @Override
+    public void deleteTrackFromPlaylist(int playlistId, int trackId) {
+        dao.deleteTrackFromPlaylist(playlistId, trackId);
     }
 }

@@ -11,4 +11,8 @@ public interface ITrackService {
     List<Track> getAllTracks(int playlistId);
 
     int getTotalLengthOfAllTracks(User user);
+
+    void addTrackToPlaylist(int playlistId, Track track);
+
+    void deleteTrackFromPlaylist(int playlistId, int trackId);
 }

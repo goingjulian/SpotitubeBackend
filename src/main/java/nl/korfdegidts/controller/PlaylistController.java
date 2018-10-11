@@ -1,8 +1,9 @@
 package nl.korfdegidts.controller;
 
+import nl.korfdegidts.dto.PlaylistTracksDTO;
 import nl.korfdegidts.dto.PlaylistsDTO;
-import nl.korfdegidts.dto.TracksDTO;
 import nl.korfdegidts.entity.Playlist;
+import nl.korfdegidts.entity.Track;
 import nl.korfdegidts.entity.User;
 import nl.korfdegidts.exception.UserNotFoundException;
 import nl.korfdegidts.service.ILoginService;
@@ -102,11 +103,11 @@ public class PlaylistController {
 
     @GET
     @Path("/{id}/tracks")
-    public Response getTracksFromPlaylist(@PathParam("id") int id, @QueryParam("token") String token) {
+    public Response getTracksFromPlaylist(@PathParam("id") int playlistId, @QueryParam("token") String token) {
         try {
             User foundUser = loginService.getUserFromToken(token);
             return Response.status(Response.Status.OK).entity(
-                    new TracksDTO(trackService.getTracksFromPlaylist(id))
+                    new PlaylistTracksDTO(trackService.getTracksFromPlaylist(playlistId))
             ).build();
         } catch (UserNotFoundException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -116,5 +117,38 @@ public class PlaylistController {
     private PlaylistsDTO getAllPlaylistsFromUserHelper(User user) {
         List<Playlist> playlists = playlistService.getAllPlaylistsFromUser(user);
         return new PlaylistsDTO(playlists, trackService.getTotalLengthOfAllTracks(user));
+    }
+
+    @POST
+    @Path("/{id}/tracks")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addTrackToPlaylist(@QueryParam("token") String token, @PathParam("id") int playlistId, Track track) {
+        try {
+            User foundUser = loginService.getUserFromToken(token);
+            trackService.addTrackToPlaylist(playlistId, track);
+            return Response.status(Response.Status.OK).entity(
+                    new PlaylistTracksDTO(trackService.getTracksFromPlaylist(playlistId))
+            ).build();
+        } catch (UserNotFoundException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+
+    @DELETE
+    @Path("/{playlistId}/tracks/{trackId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteTrackFromPlaylist(@QueryParam("token") String token,
+                                            @PathParam("playlistId") int playlistId,
+                                            @PathParam("trackId") int trackId) {
+        try {
+            User foundUser = loginService.getUserFromToken(token);
+            trackService.deleteTrackFromPlaylist(playlistId, trackId);
+            return Response.status(Response.Status.OK).entity(
+                    new PlaylistTracksDTO(trackService.getAllTracks(playlistId))
+            ).build();
+        } catch (UserNotFoundException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
     }
 }

@@ -1,5 +1,6 @@
 package nl.korfdegidts.controller;
 
+import nl.korfdegidts.dto.AllTracksNotInPlaylistDTO;
 import nl.korfdegidts.entity.Track;
 import nl.korfdegidts.entity.User;
 import nl.korfdegidts.exception.UserNotFoundException;
@@ -29,25 +30,14 @@ public class TrackController {
         this.trackService = trackService;
     }
 
-//    @GET
-//    @Path("/{id}/tracks")
-//    public Response getTracksFromPlaylist(@PathParam("id") int id, @QueryParam("token") String token) {
-//        try {
-//            User foundUser = loginService.getUserFromToken(token);
-//            return Response.status(Response.Status.OK).entity(
-//                    new TracksDTO(trackService.getTracksFromPlaylist(id))
-//            ).build();
-//        } catch (UserNotFoundException e) {
-//            return Response.status(Response.Status.UNAUTHORIZED).build();
-//        }
-//    }
-
     @GET
-    public Response getAllTracks(@QueryParam("forPlayLlist") int playlistId, @QueryParam("token") String token) {
+    public Response getAllTracks(@QueryParam("forPlaylist") int playlistId, @QueryParam("token") String token) {
         try {
             User foundUser = loginService.getUserFromToken(token);
             List<Track> tracks = trackService.getAllTracks(playlistId);
-            return Response.status(Response.Status.OK).entity(tracks).build();
+            return Response.status(Response.Status.OK).entity(
+                    new AllTracksNotInPlaylistDTO(tracks)
+            ).build();
         } catch (UserNotFoundException e) {
             return Response.status(Response.Status.OK).build();
         }

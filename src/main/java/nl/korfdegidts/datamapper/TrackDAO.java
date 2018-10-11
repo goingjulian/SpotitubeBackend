@@ -16,11 +16,11 @@ public class TrackDAO extends DataMapper {
                 Connection connection = factory.getDBConnection().getConnection();
 
                 PreparedStatement stmnt = connection.prepareStatement(
-                        "SELECT track_id, title, performer, duration, playcount, offlineAvailable, album, description, publication_date " +
+                        "SELECT t.track_id, title, performer, duration, playcount, p.offlineAvailable, album, description, publication_date " +
                                 "FROM track t " +
-                                "INNER JOIN playlist p " +
-                                "ON t.playlist_id = p.playlist_id " +
-                                "WHERE t.playlist_id = ? "
+                                "INNER JOIN trackPlaylist p " +
+                                "ON t.track_id = p.track_id " +
+                                "WHERE p.playlist_id = ? "
                 )
         ) {
             stmnt.setInt(1, playlistId);
@@ -34,17 +34,19 @@ public class TrackDAO extends DataMapper {
         }
     }
 
-    public int getTotalLengthOfAllTracks(String username) {
+    public int getTotalLengthOfAllTracksInPlaylist(String username) {
         try (
                 Connection connection = factory.getDBConnection().getConnection();
 
                 PreparedStatement stmnt = connection.prepareStatement(
-                        "SELECT SUM(duration) AS total from track t " +
-                                "inner join playlist p " +
-                                "on t.playlist_id = p.playlist_id " +
+                        "SELECT SUM(duration) AS total FROM track t\n" +
+                                "INNER JOIN trackPlaylist p " +
+                                "ON t.track_id = p.track_id " +
+                                "INNER JOIN playlist y " +
+                                "ON y.playlist_id = p.playlist_id " +
                                 "INNER JOIN user u " +
-                                "ON u.username = p.username " +
-                                "WHERE u.username = ? "
+                                "ON u.username = y.username " +
+                                "WHERE u.username = ?"
                 )
         ) {
             stmnt.setString(1, username);
@@ -65,7 +67,13 @@ public class TrackDAO extends DataMapper {
 
                 PreparedStatement stmnt = connection.prepareStatement(
                         "SELECT track_id, title, performer, duration, playcount, offlineAvailable, album, description, publication_date " +
-                                "FROM track t WHERE NOT playlist_id = ?"
+                                "FROM track t " +
+                                "WHERE t.track_id NOT IN " +
+                                "(SELECT track_id " +
+                                "FROM trackPlaylist p " +
+                                "INNER JOIN playlist s " +
+                                "ON s.playlist_id = p.playlist_id " +
+                                "WHERE p.playlist_id = ?)"
                 )
         ) {
             stmnt.setInt(1, playlistId);
@@ -73,6 +81,44 @@ public class TrackDAO extends DataMapper {
             ResultSet rs = stmnt.executeQuery();
 
             return bindResultSetToTrackList(rs);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void addTrackToPlaylist(int playlistId, Track track) {
+        try (
+                Connection connection = factory.getDBConnection().getConnection();
+
+                PreparedStatement stmnt = connection.prepareStatement(
+                        "INSERT INTO trackPlaylist (track_id, playlist_id, offlineAvailable) VALUES (?, ?, ?)"
+
+                )
+        ) {
+            stmnt.setInt(1, track.getId());
+            stmnt.setInt(2, playlistId);
+            stmnt.setBoolean(3, track.isOfflineAvailable());
+
+            stmnt.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteTrackFromPlaylist(int playlistId, int trackId) {
+        try (
+                Connection connection = factory.getDBConnection().getConnection();
+
+                PreparedStatement stmnt = connection.prepareStatement(
+                        "DELETE FROM trackPlaylist WHERE track_id = ? AND playlist_id = ?"
+                )
+        ) {
+            stmnt.setInt(1, trackId);
+            stmnt.setInt(2, playlistId);
+
+            stmnt.execute();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

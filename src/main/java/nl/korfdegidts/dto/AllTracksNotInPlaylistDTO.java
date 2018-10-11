@@ -4,10 +4,10 @@ import nl.korfdegidts.entity.Track;
 
 import java.util.List;
 
-public class TracksDTO {
+public class AllTracksNotInPlaylistDTO {
     private List<Track> tracks;
 
-    public TracksDTO(List<Track> tracks) {
+    public AllTracksNotInPlaylistDTO(List<Track> tracks) {
         this.tracks = tracks;
     }
 
