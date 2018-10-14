@@ -4,7 +4,7 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/11/18 12:10 PM
+ * File last modified: 10/14/18 3:28 PM
  */
 
 package nl.korfdegidts.connection;
@@ -18,25 +18,16 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class MySQLConnection implements IDBConnection {
-    public static final String PATH_DATABASE_PROPERTIES = "../../../database.properties";
     private Properties props;
-//    private InputStream in;
 
     public MySQLConnection() {
         props = new Properties();
-
-//        try {
-//            in = new FileInputStream(PATH_DATABASE_PROPERTIES);
-//        } catch (FileNotFoundException e) {
-//            throw new ConfigurationNotFoundException();
-//        }
     }
 
     @Override
     public Connection getConnection() {
         try {
             props.load(getClass().getResourceAsStream("/database.properties"));
-//            in.close();
         } catch (IOException e) {
             throw new ConfigurationNotFoundException();
         }
