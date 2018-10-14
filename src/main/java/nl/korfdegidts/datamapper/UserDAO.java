@@ -77,19 +77,19 @@ public class UserDAO extends DataMapper {
         return rs.getLong("expiryDate") <= System.currentTimeMillis();
     }
 
-    public void persistNewUser(User user) {
-        try (
-                Connection connection = factory.getDBConnection().getConnection();
-                PreparedStatement stmnt = connection.prepareStatement("INSERT INTO user (user, password) VALUES (?, ?)")
-
-        ) {
-            stmnt.setString(1, user.getCredentials().getUser());
-            stmnt.setString(2, user.getCredentials().getPassword());
-            stmnt.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    public void persistNewUser(User user) {
+//        try (
+//                Connection connection = factory.getDBConnection().getConnection();
+//                PreparedStatement stmnt = connection.prepareStatement("INSERT INTO user (user, password) VALUES (?, ?)")
+//
+//        ) {
+//            stmnt.setString(1, user.getCredentials().getUser());
+//            stmnt.setString(2, user.getCredentials().getPassword());
+//            stmnt.execute();
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     @Override
     protected User mapResult(ResultSet rs) throws SQLException {

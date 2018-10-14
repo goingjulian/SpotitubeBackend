@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TrackDAO extends DataMapper {
+public class TrackDAO extends DataMapper {//<> generic
 
     public List<Track> getAllTracksInPlaylist(int playlistId) {
         try (

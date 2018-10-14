@@ -9,6 +9,7 @@
 
 package nl.korfdegidts.datamapper;
 
+import nl.korfdegidts.authentication.TokenGenerator;
 import nl.korfdegidts.authentication.UserCredentials;
 import nl.korfdegidts.entity.Token;
 import nl.korfdegidts.exception.AllTokensOccupiedException;
@@ -17,19 +18,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Random;
 
 public class TokenDAO extends DataMapper {
 
-    private static final int TOKEN_PAIR_AMOUNT = 4;
-    private static final int MAX_PAIR_VALUE = 9999;
     private static final int TIME_IM_MS = 7200000;
     private static final int MAX_TRIES = 3;
 
     public Token getNewUserToken(UserCredentials credentials) {
+        TokenGenerator generator = new TokenGenerator();
         deleteOldTokens(credentials);
 
-        String tokenStr = generateUniqueToken();
+        String tokenStr = generator.getUniqueToken();
 
         int tries = 0;
         while (tokenAlreadyTaken(tokenStr)) {
@@ -39,13 +38,13 @@ public class TokenDAO extends DataMapper {
                         "No unique tokens found, make sure that the number range is sufficient enough"
                 );
             } else {
-                tokenStr = generateUniqueToken();
+                tokenStr = generator.getUniqueToken();
                 tries++;
             }
 
         }
 
-        Token token = new Token(credentials.getUser(), generateUniqueToken(), getExpiryDate());
+        Token token = new Token(credentials.getUser(), tokenStr, getExpiryDate());
 
         addNewTokenToUser(token);
 
@@ -75,10 +74,11 @@ public class TokenDAO extends DataMapper {
         try (
                 Connection connection = factory.getDBConnection().getConnection();
                 PreparedStatement stmnt = connection.prepareStatement(
-                        "DELETE FROM token WHERE username = ?"
+                        "DELETE FROM token WHERE username = ? AND expiryDate <= ?"
                 )
         ) {
             stmnt.setString(1, credentials.getUser());
+            stmnt.setLong(2, System.currentTimeMillis());
             stmnt.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -107,19 +107,19 @@ public class TokenDAO extends DataMapper {
         }
     }
 
-    private String generateUniqueToken() {
-
-        Random rand = new Random();
-
-        StringBuilder randomToken = new StringBuilder();
-
-        for (int i = 0; i < TOKEN_PAIR_AMOUNT; i++) {
-            randomToken.append(Integer.toString(rand.nextInt(MAX_PAIR_VALUE)));
-        }
-
-        return randomToken.toString();
-
-    }
+//    private String generateUniqueToken() {
+//
+//        Random rand = new Random();
+//
+//        StringBuilder randomToken = new StringBuilder();
+//
+//        for (int i = 0; i < TOKEN_PAIR_AMOUNT; i++) {
+//            randomToken.append(Integer.toString(rand.nextInt(MAX_PAIR_VALUE)));
+//        }
+//
+//        return randomToken.toString();
+//
+//    }
 
     private boolean resultsEmpty(ResultSet rs) throws SQLException {
         rs.last();

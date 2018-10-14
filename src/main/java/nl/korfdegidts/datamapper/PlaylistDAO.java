@@ -30,8 +30,6 @@ public class PlaylistDAO extends DataMapper {
                                 "FROM playlist p " +
                                 "INNER JOIN user u " +
                                 "ON p.username = u.username " +
-                                "INNER JOIN token t " +
-                                "ON t.username = u.username " +
                                 "WHERE u.username = ? ")
         ) {
             stmnt.setString(1, user.getCredentials().getUser());
