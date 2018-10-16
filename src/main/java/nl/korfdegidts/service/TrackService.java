@@ -4,7 +4,7 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/16/18 2:36 PM
+ * File last modified: 10/16/18 3:33 PM
  */
 
 package nl.korfdegidts.service;
@@ -15,7 +15,6 @@ import nl.korfdegidts.entity.Track;
 import nl.korfdegidts.entity.User;
 
 import javax.inject.Inject;
-import java.util.List;
 
 public class TrackService implements ITrackService {
     private TrackDAO dao;
@@ -26,13 +25,13 @@ public class TrackService implements ITrackService {
     }
 
     @Override
-    public PlaylistTracksDTO getPlaylistsTracksDTOFromPlaylist(int playlistId) {
+    public PlaylistTracksDTO getAllTracksInPlaylistDTO(int playlistId) {
         return new PlaylistTracksDTO(dao.getAllTracksInPlaylist(playlistId));
     }
 
     @Override
-    public List<Track> getAllTracks(int playlistId) {
-        return dao.getAllTracks(playlistId);
+    public PlaylistTracksDTO getAllTracksNotInPlaylist(int playlistId) {
+        return new PlaylistTracksDTO(dao.getAllTracksNotInPlaylist(playlistId));
     }
 
     @Override

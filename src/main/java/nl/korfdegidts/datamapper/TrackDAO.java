@@ -4,7 +4,7 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/14/18 3:28 PM
+ * File last modified: 10/16/18 2:57 PM
  */
 
 package nl.korfdegidts.datamapper;
@@ -70,7 +70,7 @@ public class TrackDAO extends DataMapper {//<> generic
         }
     }
 
-    public List<Track> getAllTracks(int playlistId) {
+    public List<Track> getAllTracksNotInPlaylist(int playlistId) {
         try (
                 Connection connection = factory.getDBConnection().getConnection();
 

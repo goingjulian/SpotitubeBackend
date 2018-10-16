@@ -4,7 +4,7 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/16/18 2:36 PM
+ * File last modified: 10/16/18 3:33 PM
  */
 
 package nl.korfdegidts.service;
@@ -13,12 +13,10 @@ import nl.korfdegidts.dto.PlaylistTracksDTO;
 import nl.korfdegidts.entity.Track;
 import nl.korfdegidts.entity.User;
 
-import java.util.List;
-
 public interface ITrackService {
-    PlaylistTracksDTO getPlaylistsTracksDTOFromPlaylist(int playlistId);
+    PlaylistTracksDTO getAllTracksInPlaylistDTO(int playlistId);
 
-    List<Track> getAllTracks(int playlistId);
+    PlaylistTracksDTO getAllTracksNotInPlaylist(int playlistId);
 
     int getTotalLengthOfAllTracks(User user);
 

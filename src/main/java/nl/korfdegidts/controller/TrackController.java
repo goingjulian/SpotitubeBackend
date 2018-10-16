@@ -4,13 +4,11 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/14/18 3:28 PM
+ * File last modified: 10/16/18 3:02 PM
  */
 
 package nl.korfdegidts.controller;
 
-import nl.korfdegidts.dto.AllTracksNotInPlaylistDTO;
-import nl.korfdegidts.entity.Track;
 import nl.korfdegidts.entity.User;
 import nl.korfdegidts.exception.UserNotFoundException;
 import nl.korfdegidts.service.ILoginService;
@@ -21,7 +19,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @Path("/tracks")
 public class TrackController {
@@ -40,12 +37,11 @@ public class TrackController {
     }
 
     @GET
-    public Response getAllTracks(@QueryParam("forPlaylist") int playlistId, @QueryParam("token") String token) {
+    public Response getAllTracksNotInPlaylist(@QueryParam("forPlaylist") int playlistId, @QueryParam("token") String token) {
         try {
             User foundUser = loginService.getUserFromToken(token);
-            List<Track> tracks = trackService.getAllTracks(playlistId);
             return Response.status(Response.Status.OK).entity(
-                    new AllTracksNotInPlaylistDTO(tracks)
+                    trackService.getAllTracksNotInPlaylist(playlistId)
             ).build();
         } catch (UserNotFoundException e) {
             return Response.status(Response.Status.OK).build();

@@ -4,7 +4,7 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/16/18 2:52 PM
+ * File last modified: 10/16/18 3:02 PM
  */
 
 package nl.korfdegidts.controller;
@@ -113,7 +113,7 @@ public class PlaylistController {
         try {
             User foundUser = loginService.getUserFromToken(token);
             return Response.status(Response.Status.OK).entity(
-                    trackService.getPlaylistsTracksDTOFromPlaylist(playlistId)
+                    trackService.getAllTracksInPlaylistDTO(playlistId)
             ).build();
         } catch (UserNotFoundException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -131,7 +131,7 @@ public class PlaylistController {
             User foundUser = loginService.getUserFromToken(token);
             trackService.addTrackToPlaylist(playlistId, track);
             return Response.status(Response.Status.OK).entity(
-                    trackService.getPlaylistsTracksDTOFromPlaylist(playlistId)
+                    trackService.getAllTracksInPlaylistDTO(playlistId)
             ).build();
         } catch (UserNotFoundException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -148,7 +148,7 @@ public class PlaylistController {
             User foundUser = loginService.getUserFromToken(token);
             trackService.deleteTrackFromPlaylist(playlistId, trackId);
             return Response.status(Response.Status.OK).entity(
-                    trackService.getAllTracks(playlistId)
+                    trackService.getAllTracksInPlaylistDTO(playlistId)
             ).build();
         } catch (UserNotFoundException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
