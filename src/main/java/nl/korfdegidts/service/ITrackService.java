@@ -4,18 +4,19 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/14/18 3:28 PM
+ * File last modified: 10/16/18 2:36 PM
  */
 
 package nl.korfdegidts.service;
 
+import nl.korfdegidts.dto.PlaylistTracksDTO;
 import nl.korfdegidts.entity.Track;
 import nl.korfdegidts.entity.User;
 
 import java.util.List;
 
 public interface ITrackService {
-    List<Track> getTracksFromPlaylist(int playlistId);
+    PlaylistTracksDTO getPlaylistsTracksDTOFromPlaylist(int playlistId);
 
     List<Track> getAllTracks(int playlistId);
 

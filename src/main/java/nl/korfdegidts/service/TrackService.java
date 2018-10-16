@@ -4,12 +4,13 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/14/18 3:28 PM
+ * File last modified: 10/16/18 2:36 PM
  */
 
 package nl.korfdegidts.service;
 
 import nl.korfdegidts.datamapper.TrackDAO;
+import nl.korfdegidts.dto.PlaylistTracksDTO;
 import nl.korfdegidts.entity.Track;
 import nl.korfdegidts.entity.User;
 
@@ -17,7 +18,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 public class TrackService implements ITrackService {
-    private TrackDAO dao = new TrackDAO();
+    private TrackDAO dao;
 
     @Inject
     public void setDao(TrackDAO dao) {
@@ -25,8 +26,8 @@ public class TrackService implements ITrackService {
     }
 
     @Override
-    public List<Track> getTracksFromPlaylist(int playlistId) {
-        return dao.getAllTracksInPlaylist(playlistId);
+    public PlaylistTracksDTO getPlaylistsTracksDTOFromPlaylist(int playlistId) {
+        return new PlaylistTracksDTO(dao.getAllTracksInPlaylist(playlistId));
     }
 
     @Override

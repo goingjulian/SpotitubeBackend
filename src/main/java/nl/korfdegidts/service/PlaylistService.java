@@ -4,12 +4,13 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/14/18 3:28 PM
+ * File last modified: 10/16/18 2:52 PM
  */
 
 package nl.korfdegidts.service;
 
 import nl.korfdegidts.datamapper.PlaylistDAO;
+import nl.korfdegidts.dto.PlaylistsDTO;
 import nl.korfdegidts.entity.Playlist;
 import nl.korfdegidts.entity.User;
 
@@ -17,16 +18,18 @@ import javax.inject.Inject;
 import java.util.List;
 
 public class PlaylistService implements IPlaylistService {
-    private PlaylistDAO dao = new PlaylistDAO();
+
+    private PlaylistDAO dao;
+    private TrackService trackService;
+
+    @Inject
+    public void setTrackService(TrackService trackService) {
+        this.trackService = trackService;
+    }
 
     @Inject
     public void setDao(PlaylistDAO dao) {
         this.dao = dao;
-    }
-
-    @Override
-    public List<Playlist> getAllPlaylistsFromUser(User user) {
-        return dao.getAllPlaylistsFromUser(user);
     }
 
     @Override
@@ -44,5 +47,10 @@ public class PlaylistService implements IPlaylistService {
         dao.editPlaylist(playlist);
     }
 
+    @Override
+    public PlaylistsDTO getAllPlaylistsFromUser(User user) {
+        List<Playlist> allPlaylistsFromUser = dao.getAllPlaylistsFromUser(user);
+        return new PlaylistsDTO(allPlaylistsFromUser, trackService.getTotalLengthOfAllTracks(user));
+    }
 
 }

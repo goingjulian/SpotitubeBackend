@@ -4,7 +4,7 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/14/18 3:28 PM
+ * File last modified: 10/14/18 3:37 PM
  */
 
 package nl.korfdegidts.datamapper;
@@ -35,7 +35,9 @@ public class TokenDAO extends DataMapper {
 
             if (tries >= MAX_TRIES) {
                 throw new AllTokensOccupiedException(
-                        "No unique tokens found, make sure that the number range is sufficient enough"
+                        "All possible token combinations are already taken, " +
+                                "your app must be really popular so the tokens " +
+                                "you generate do not provide enough possible combinations"
                 );
             } else {
                 tokenStr = generator.getUniqueToken();
@@ -106,20 +108,6 @@ public class TokenDAO extends DataMapper {
             throw new RuntimeException(e);
         }
     }
-
-//    private String generateUniqueToken() {
-//
-//        Random rand = new Random();
-//
-//        StringBuilder randomToken = new StringBuilder();
-//
-//        for (int i = 0; i < TOKEN_PAIR_AMOUNT; i++) {
-//            randomToken.append(Integer.toString(rand.nextInt(MAX_PAIR_VALUE)));
-//        }
-//
-//        return randomToken.toString();
-//
-//    }
 
     private boolean resultsEmpty(ResultSet rs) throws SQLException {
         rs.last();
