@@ -4,10 +4,10 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/14/18 3:28 PM
+ * File last modified: 10/23/18 4:08 PM
  */
 
-package nl.korfdegidts.datamapper;
+package nl.korfdegidts.persistence;
 
 import nl.korfdegidts.entity.Playlist;
 import nl.korfdegidts.entity.User;
@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlaylistDAO extends DataMapper {
+public class PlaylistDAO extends DAO {
 
     public List<Playlist> getAllPlaylistsFromUser(User user) {
         try (

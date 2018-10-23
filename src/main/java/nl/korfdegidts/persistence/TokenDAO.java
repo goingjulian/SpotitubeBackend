@@ -4,22 +4,22 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/16/18 3:33 PM
+ * File last modified: 10/23/18 4:25 PM
  */
 
-package nl.korfdegidts.datamapper;
+package nl.korfdegidts.persistence;
 
-import nl.korfdegidts.authentication.TokenGenerator;
 import nl.korfdegidts.entity.Token;
 import nl.korfdegidts.entity.UserCredentials;
 import nl.korfdegidts.exception.AllTokensOccupiedException;
+import nl.korfdegidts.tokenGenerator.TokenGenerator;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class TokenDAO extends DataMapper {
+public class TokenDAO extends DAO {
 
     private static final int TIME_IM_MS = 7200000;
     private static final int MAX_TRIES = 3;

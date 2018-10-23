@@ -4,10 +4,10 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/16/18 2:57 PM
+ * File last modified: 10/23/18 4:08 PM
  */
 
-package nl.korfdegidts.datamapper;
+package nl.korfdegidts.persistence;
 
 import nl.korfdegidts.entity.Track;
 
@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TrackDAO extends DataMapper {//<> generic
+public class TrackDAO extends DAO {//<> generic
 
     public List<Track> getAllTracksInPlaylist(int playlistId) {
         try (
@@ -48,7 +48,7 @@ public class TrackDAO extends DataMapper {//<> generic
                 Connection connection = factory.getDBConnection().getConnection();
 
                 PreparedStatement stmnt = connection.prepareStatement(
-                        "SELECT SUM(duration) AS total FROM track t\n" +
+                        "SELECT SUM(duration) AS total FROM track t " +
                                 "INNER JOIN trackPlaylist p " +
                                 "ON t.track_id = p.track_id " +
                                 "INNER JOIN playlist y " +

@@ -4,15 +4,15 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/16/18 2:52 PM
+ * File last modified: 10/23/18 4:25 PM
  */
 
 package nl.korfdegidts.service;
 
-import nl.korfdegidts.datamapper.PlaylistDAO;
 import nl.korfdegidts.dto.PlaylistsDTO;
 import nl.korfdegidts.entity.Playlist;
 import nl.korfdegidts.entity.User;
+import nl.korfdegidts.persistence.PlaylistDAO;
 
 import javax.inject.Inject;
 import java.util.List;

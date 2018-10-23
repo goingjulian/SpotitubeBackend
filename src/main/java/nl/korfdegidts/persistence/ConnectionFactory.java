@@ -4,18 +4,14 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/14/18 3:28 PM
+ * File last modified: 10/23/18 4:10 PM
  */
 
-package nl.korfdegidts.authentication;
+package nl.korfdegidts.persistence;
 
-import java.util.UUID;
+public class ConnectionFactory {
 
-public class TokenGenerator {
-
-    public String getUniqueToken() {
-        UUID uuid = UUID.randomUUID();
-        return uuid.toString();
+    public IDBConnection getDBConnection() {
+        return new MySQLConnection();
     }
-
 }

@@ -4,10 +4,10 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/16/18 3:33 PM
+ * File last modified: 10/23/18 4:08 PM
  */
 
-package nl.korfdegidts.datamapper;
+package nl.korfdegidts.persistence;
 
 import nl.korfdegidts.entity.User;
 import nl.korfdegidts.entity.UserCredentials;
@@ -18,7 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDAO extends DataMapper {
+public class UserDAO extends DAO {
 
     public User getUserFromCredentials(UserCredentials credentials) throws UserNotFoundException {
         try (

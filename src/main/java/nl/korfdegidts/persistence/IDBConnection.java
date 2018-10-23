@@ -4,14 +4,14 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/14/18 3:28 PM
+ * File last modified: 10/23/18 4:10 PM
  */
 
-package nl.korfdegidts.connection;
+package nl.korfdegidts.persistence;
 
-public class ConnectionFactory {
+import java.sql.Connection;
 
-    public IDBConnection getDBConnection() {
-        return new MySQLConnection();
-    }
+public interface IDBConnection {
+
+    Connection getConnection();
 }

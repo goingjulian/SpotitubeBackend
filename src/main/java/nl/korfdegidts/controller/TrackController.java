@@ -4,7 +4,7 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/16/18 3:02 PM
+ * File last modified: 10/23/18 10:04 AM
  */
 
 package nl.korfdegidts.controller;
@@ -44,7 +44,7 @@ public class TrackController {
                     trackService.getAllTracksNotInPlaylist(playlistId)
             ).build();
         } catch (UserNotFoundException e) {
-            return Response.status(Response.Status.OK).build();
+            return Response.status(Response.Status.FORBIDDEN).build();
         }
     }
 

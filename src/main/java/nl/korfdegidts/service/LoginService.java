@@ -4,18 +4,18 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/16/18 3:33 PM
+ * File last modified: 10/23/18 4:25 PM
  */
 
 package nl.korfdegidts.service;
 
-import nl.korfdegidts.datamapper.TokenDAO;
-import nl.korfdegidts.datamapper.UserDAO;
 import nl.korfdegidts.dto.TokenDTO;
 import nl.korfdegidts.entity.Token;
 import nl.korfdegidts.entity.User;
 import nl.korfdegidts.entity.UserCredentials;
 import nl.korfdegidts.exception.UserNotFoundException;
+import nl.korfdegidts.persistence.TokenDAO;
+import nl.korfdegidts.persistence.UserDAO;
 
 import javax.inject.Inject;
 

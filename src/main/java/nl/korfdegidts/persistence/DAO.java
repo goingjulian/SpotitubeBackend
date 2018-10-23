@@ -4,19 +4,18 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/14/18 3:28 PM
+ * File last modified: 10/23/18 4:10 PM
  */
 
-package nl.korfdegidts.datamapper;
+package nl.korfdegidts.persistence;
 
-import nl.korfdegidts.connection.ConnectionFactory;
 import nl.korfdegidts.entity.IEntity;
 
 import javax.inject.Inject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class DataMapper {
+public abstract class DAO {
 
     protected ConnectionFactory factory;
 

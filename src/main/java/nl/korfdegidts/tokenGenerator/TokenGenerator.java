@@ -4,14 +4,18 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/14/18 3:28 PM
+ * File last modified: 10/23/18 4:02 PM
  */
 
-package nl.korfdegidts.connection;
+package nl.korfdegidts.tokenGenerator;
 
-import java.sql.Connection;
+import java.util.UUID;
 
-public interface IDBConnection {
+public class TokenGenerator {
 
-    Connection getConnection();
+    public String getUniqueToken() {
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString();
+    }
+
 }
