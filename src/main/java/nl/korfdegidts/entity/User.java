@@ -4,22 +4,32 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/29/18 11:22 AM
+ * File last modified: 10/31/18 10:50 PM
  */
 
 package nl.korfdegidts.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import nl.korfdegidts.Authentication.Role;
 
-public class User implements IEntity {
-    private List<Playlist> playlists = new ArrayList<>(); //REMOVE
+import java.security.Principal;
 
+public class User implements IEntity, Principal {
     private UserCredentials credentials;
     private String token;
+    private Role role;
 
-    public User(UserCredentials credentials) {
+    public User() {
+    }
+
+    public User(UserCredentials credentials, String token, Role role) {
         this.credentials = credentials;
+        this.token = token;
+        this.role = role;
+    }
+
+    public User(UserCredentials credentials, Role role) {
+        this.credentials = credentials;
+        this.role = role;
     }
 
     public UserCredentials getCredentials() {
@@ -30,15 +40,20 @@ public class User implements IEntity {
         return token;
     }
 
-    public List<Playlist> getPlaylists() {
-        return playlists;
-    }
-
-    public void addPlaylist(int id, String name, boolean isOwner) {
-        playlists.add(new Playlist(id, name, isOwner));
-    }
-
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    @Override
+    public String getName() {
+        return credentials.getUser();
     }
 }

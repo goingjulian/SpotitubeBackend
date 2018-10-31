@@ -4,11 +4,12 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/29/18 11:22 AM
+ * File last modified: 10/31/18 11:46 AM
  */
 
 package nl.korfdegidts.persistence;
 
+import nl.korfdegidts.Authentication.Role;
 import nl.korfdegidts.entity.User;
 import nl.korfdegidts.entity.UserCredentials;
 import nl.korfdegidts.exception.UserNotFoundException;
@@ -24,7 +25,7 @@ public class UserDAO extends DAO {
         try (
                 Connection connection = factory.getDBConnection().getConnection();
                 PreparedStatement stmnt = connection.prepareStatement(
-                        "SELECT username, password " +
+                        "SELECT username, password, role " +
                                 "FROM user " +
                                 "WHERE username = ? " +
                                 "AND password = ? "
@@ -49,7 +50,7 @@ public class UserDAO extends DAO {
         try (
                 Connection connection = factory.getDBConnection().getConnection();
                 PreparedStatement stmnt = connection.prepareStatement(
-                        "SELECT u.username, password, t.expiryDate " +
+                        "SELECT u.username, password, role, t.expiryDate " +
                                 "FROM user u " +
                                 "INNER JOIN token t " +
                                 "ON u.username = t.username " +
@@ -97,7 +98,8 @@ public class UserDAO extends DAO {
                 new UserCredentials(
                         rs.getString("username"),
                         rs.getString("password")
-                )
+                ),
+                Role.valueOf(rs.getString("role"))
         );
     }
 

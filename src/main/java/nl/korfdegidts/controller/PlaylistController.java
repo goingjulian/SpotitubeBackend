@@ -4,16 +4,17 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/29/18 11:22 AM
+ * File last modified: 10/31/18 10:50 PM
  */
 
 package nl.korfdegidts.controller;
 
+import nl.korfdegidts.Authentication.AuthenticatedUser;
+import nl.korfdegidts.Authentication.Role;
+import nl.korfdegidts.Authentication.Secure;
 import nl.korfdegidts.entity.Playlist;
 import nl.korfdegidts.entity.Track;
 import nl.korfdegidts.entity.User;
-import nl.korfdegidts.exception.UserNotFoundException;
-import nl.korfdegidts.service.ILoginService;
 import nl.korfdegidts.service.IPlaylistService;
 import nl.korfdegidts.service.ITrackService;
 
@@ -25,14 +26,8 @@ import javax.ws.rs.core.Response;
 @Path("/playlists")
 public class PlaylistController {
 
-    private ILoginService loginService;
     private IPlaylistService playlistService;
     private ITrackService trackService;
-
-    @Inject
-    public void setLoginService(ILoginService loginService) {
-        this.loginService = loginService;
-    }
 
     @Inject
     public void setPlaylistService(IPlaylistService playlistService) {
@@ -44,114 +39,88 @@ public class PlaylistController {
         this.trackService = trackService;
     }
 
+    @Secure
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllPlaylistsFromUser(@QueryParam("token") String token) {
-        try {
-            User foundUser = loginService.getUserFromToken(token);
+    public Response getAllPlaylistsFromUser() {
+        User user = AuthenticatedUser.getAuthenticatedUser();
 
-            return Response.status(Response.Status.OK).entity(
-                    playlistService.getAllPlaylistsFromUser(foundUser)
-            ).build();
-        } catch (UserNotFoundException e) {
-            return Response.status(Response.Status.FORBIDDEN).build();
-        }
+        return Response.status(Response.Status.OK).entity(
+                playlistService.getAllPlaylistsFromUser(user)
+        ).build();
     }
 
+    @Secure(allowedRoles = {Role.ADMIN})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response persistNewPlaylist(@QueryParam("token") String token, Playlist playlist) {
-        try {
-            User foundUser = loginService.getUserFromToken(token);
-            playlistService.persistNewPlaylist(playlist, foundUser.getCredentials().getUser());
+    public Response persistNewPlaylist(Playlist playlist) {
+        User user = AuthenticatedUser.getAuthenticatedUser();
 
-            return Response.status(Response.Status.OK).entity(
-                    playlistService.getAllPlaylistsFromUser(foundUser)
-            ).build();
-        } catch (UserNotFoundException e) {
-            return Response.status(Response.Status.FORBIDDEN).build();
-        }
+        playlistService.persistNewPlaylist(playlist, user.getCredentials().getUser());
+
+        return Response.status(Response.Status.OK).entity(
+                playlistService.getAllPlaylistsFromUser(user)
+        ).build();
     }
 
+    @Secure(allowedRoles = {Role.ADMIN})
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deletePlaylist(@QueryParam("token") String token, @PathParam("id") int playlistId) {
-        try {
-            User foundUser = loginService.getUserFromToken(token);
-            playlistService.deletePlaylist(playlistId);
+    public Response deletePlaylist(@PathParam("id") int playlistId) {
+        User user = AuthenticatedUser.getAuthenticatedUser();
+        playlistService.deletePlaylist(playlistId);
 
-            return Response.status(Response.Status.OK).entity(
-                    playlistService.getAllPlaylistsFromUser(foundUser)
-            ).build();
-        } catch (UserNotFoundException e) {
-            return Response.status(Response.Status.FORBIDDEN).build();
-        }
+        return Response.status(Response.Status.OK).entity(
+                playlistService.getAllPlaylistsFromUser(user)
+        ).build();
     }
 
+    @Secure(allowedRoles = {Role.ADMIN})
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response editPlaylistName(@QueryParam("token") String token, Playlist playlist) {
-        try {
-            User foundUser = loginService.getUserFromToken(token);
-            playlistService.editPlaylistName(playlist);
+    public Response editPlaylistName(Playlist playlist) {
+        User user = AuthenticatedUser.getAuthenticatedUser();
 
-            return Response.status(Response.Status.OK).entity(
-                    playlistService.getAllPlaylistsFromUser(foundUser)
-            ).build();
-        } catch (UserNotFoundException e) {
-            return Response.status(Response.Status.FORBIDDEN).build();
-        }
+        playlistService.editPlaylistName(playlist);
+
+        return Response.status(Response.Status.OK).entity(
+                playlistService.getAllPlaylistsFromUser(user)
+        ).build();
     }
 
     @GET
     @Path("/{id}/tracks")
-    public Response getTracksFromPlaylist(@PathParam("id") int playlistId, @QueryParam("token") String token) {
-        try {
-            User foundUser = loginService.getUserFromToken(token);
-            return Response.status(Response.Status.OK).entity(
-                    trackService.getAllTracksInPlaylistDTO(playlistId)
-            ).build();
-        } catch (UserNotFoundException e) {
-            return Response.status(Response.Status.FORBIDDEN).build();
-        }
+    public Response getTracksFromPlaylist(@PathParam("id") int playlistId) {
+        return Response.status(Response.Status.OK).entity(
+                trackService.getAllTracksInPlaylistDTO(playlistId)
+        ).build();
     }
 
+    @Secure(allowedRoles = {Role.ADMIN})
     @POST
     @Path("/{id}/tracks")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addTrackToPlaylist(@QueryParam("token") String token,
-                                       @PathParam("id") int playlistId,
-                                       Track track) {
-        try {
-            User foundUser = loginService.getUserFromToken(token);
-            trackService.addTrackToPlaylist(playlistId, track);
-            return Response.status(Response.Status.OK).entity(
-                    trackService.getAllTracksInPlaylistDTO(playlistId)
-            ).build();
-        } catch (UserNotFoundException e) {
-            return Response.status(Response.Status.FORBIDDEN).build();
-        }
+    public Response addTrackToPlaylist(@PathParam("id") int playlistId, Track track) {
+        trackService.addTrackToPlaylist(playlistId, track);
+        return Response.status(Response.Status.OK).entity(
+                trackService.getAllTracksInPlaylistDTO(playlistId)
+        ).build();
     }
 
+    @Secure(allowedRoles = {Role.ADMIN})
     @DELETE
     @Path("/{playlistId}/tracks/{trackId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteTrackFromPlaylist(@QueryParam("token") String token,
-                                            @PathParam("playlistId") int playlistId,
+    public Response deleteTrackFromPlaylist(@PathParam("playlistId") int playlistId,
                                             @PathParam("trackId") int trackId) {
-        try {
-            User foundUser = loginService.getUserFromToken(token);
-            trackService.deleteTrackFromPlaylist(playlistId, trackId);
-            return Response.status(Response.Status.OK).entity(
-                    trackService.getAllTracksInPlaylistDTO(playlistId)
-            ).build();
-        } catch (UserNotFoundException e) {
-            return Response.status(Response.Status.FORBIDDEN).build();
-        }
+        trackService.deleteTrackFromPlaylist(playlistId, trackId);
+        return Response.status(Response.Status.OK).entity(
+                trackService.getAllTracksInPlaylistDTO(playlistId)
+        ).build();
     }
 }
