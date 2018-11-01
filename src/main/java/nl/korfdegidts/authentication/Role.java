@@ -4,10 +4,11 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/31/18 10:45 PM
+ * File last modified: 11/1/18 11:54 AM
  */
 
-package nl.korfdegidts.exception;
+package nl.korfdegidts.authentication;
 
-public class InCorrectTargetMethodException extends Exception {
+public enum Role {
+    ADMIN, USER, CONTENT_MNG
 }

@@ -4,12 +4,12 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/31/18 10:50 PM
+ * File last modified: 11/1/18 11:54 AM
  */
 
 package nl.korfdegidts.entity;
 
-import nl.korfdegidts.Authentication.Role;
+import nl.korfdegidts.authentication.Role;
 
 import java.security.Principal;
 

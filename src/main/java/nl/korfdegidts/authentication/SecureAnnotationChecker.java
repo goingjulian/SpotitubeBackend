@@ -4,20 +4,20 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/31/18 10:45 PM
+ * File last modified: 11/1/18 2:23 PM
  */
 
-package nl.korfdegidts.Authentication;
+package nl.korfdegidts.authentication;
 
 import nl.korfdegidts.exception.AnnotationNotFoundException;
-import nl.korfdegidts.exception.InCorrectTargetMethodException;
+import nl.korfdegidts.exception.MethodDoesNotExist;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 public class SecureAnnotationChecker {
 
-    public boolean methodIsSecured(Class targetClass, Method targetMethod) throws InCorrectTargetMethodException {
+    public boolean methodIsSecured(Class targetClass, Method targetMethod) throws MethodDoesNotExist {
 
         methodAndClassAreSet(targetClass, targetMethod);
 
@@ -25,21 +25,20 @@ public class SecureAnnotationChecker {
             Secure secureAnnotation = getAnnotationFromMethod(targetClass, targetMethod);
 
         } catch (NoSuchMethodException e) {
-            throw new InCorrectTargetMethodException();
+            throw new MethodDoesNotExist();
         } catch (AnnotationNotFoundException a) {
             return false;
         }
         return true;
     }
 
-    public boolean userHasCorrectRoleForMethod(Class targetClass, Method targetMethod, Role role) throws InCorrectTargetMethodException {
+    public boolean userHasCorrectRoleForMethod(Class targetClass, Method targetMethod, Role role) throws MethodDoesNotExist {
         methodAndClassAreSet(targetClass, targetMethod);
 
         try {
             Secure sec = getAnnotationFromMethod(targetClass, targetMethod);
             for (Role annoRole : sec.allowedRoles()) {
                 if (annoRole == role) {
-                    System.out.println(annoRole);
                     return true;
                 }
             }
@@ -50,9 +49,9 @@ public class SecureAnnotationChecker {
         return false;
     }
 
-    private void methodAndClassAreSet(Class targetClass, Method targetMethod) throws InCorrectTargetMethodException {
+    private void methodAndClassAreSet(Class targetClass, Method targetMethod) throws MethodDoesNotExist {
         if (targetClass == null || targetMethod == null) {
-            throw new InCorrectTargetMethodException();
+            throw new MethodDoesNotExist();
         }
     }
 

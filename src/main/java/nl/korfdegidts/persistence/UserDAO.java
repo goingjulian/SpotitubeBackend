@@ -4,12 +4,12 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/31/18 11:46 AM
+ * File last modified: 11/1/18 11:54 AM
  */
 
 package nl.korfdegidts.persistence;
 
-import nl.korfdegidts.Authentication.Role;
+import nl.korfdegidts.authentication.Role;
 import nl.korfdegidts.entity.User;
 import nl.korfdegidts.entity.UserCredentials;
 import nl.korfdegidts.exception.UserNotFoundException;

@@ -4,10 +4,10 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/31/18 9:52 PM
+ * File last modified: 11/1/18 11:54 AM
  */
 
-package nl.korfdegidts.Authentication;
+package nl.korfdegidts.authentication;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

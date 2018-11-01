@@ -4,14 +4,14 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/31/18 10:50 PM
+ * File last modified: 11/1/18 11:54 AM
  */
 
 package nl.korfdegidts.controller;
 
-import nl.korfdegidts.Authentication.AuthenticatedUser;
-import nl.korfdegidts.Authentication.Role;
-import nl.korfdegidts.Authentication.Secure;
+import nl.korfdegidts.authentication.AuthenticatedUser;
+import nl.korfdegidts.authentication.Role;
+import nl.korfdegidts.authentication.Secure;
 import nl.korfdegidts.entity.Playlist;
 import nl.korfdegidts.entity.Track;
 import nl.korfdegidts.entity.User;
@@ -92,6 +92,7 @@ public class PlaylistController {
         ).build();
     }
 
+    @Secure
     @GET
     @Path("/{id}/tracks")
     public Response getTracksFromPlaylist(@PathParam("id") int playlistId) {

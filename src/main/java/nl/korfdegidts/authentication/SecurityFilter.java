@@ -4,13 +4,13 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/31/18 10:50 PM
+ * File last modified: 11/1/18 2:28 PM
  */
 
-package nl.korfdegidts.Authentication;
+package nl.korfdegidts.authentication;
 
 import nl.korfdegidts.entity.User;
-import nl.korfdegidts.exception.InCorrectTargetMethodException;
+import nl.korfdegidts.exception.MethodDoesNotExist;
 import nl.korfdegidts.exception.UserNotFoundException;
 import nl.korfdegidts.service.ILoginService;
 
@@ -59,7 +59,7 @@ public class SecurityFilter implements ContainerRequestFilter {
                     throw new AuthenticationException();
                 }
             }
-        } catch (InCorrectTargetMethodException e) {
+        } catch (MethodDoesNotExist e) {
             containerRequestContext.abortWith(Response.status(Response.Status.NOT_FOUND).build());
         } catch (AuthenticationException a) {
             containerRequestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
@@ -81,6 +81,10 @@ public class SecurityFilter implements ContainerRequestFilter {
     private User getUserFromRequest(ContainerRequestContext containerRequestContext) throws AuthenticationException {
         String token = getTokenFromQueryParam(containerRequestContext);
 
+        if (token == null) {
+            throw new AuthenticationException();
+        }
+
         User user = null;
         try {
             user = loginService.getUserFromToken(token);
@@ -91,7 +95,7 @@ public class SecurityFilter implements ContainerRequestFilter {
         return user;
     }
 
-    private boolean userHasCorrectRole(User user, Class targetClass, Method targetMethod) throws InCorrectTargetMethodException {
+    private boolean userHasCorrectRole(User user, Class targetClass, Method targetMethod) throws MethodDoesNotExist {
 
         return secureAnnotationChecker.userHasCorrectRoleForMethod(targetClass, targetMethod, user.getRole());
     }

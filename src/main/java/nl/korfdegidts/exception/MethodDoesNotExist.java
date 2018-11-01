@@ -4,11 +4,10 @@
  *
  * All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
  *
- * File last modified: 10/31/18 11:21 AM
+ * File last modified: 11/1/18 12:18 PM
  */
 
-package nl.korfdegidts.Authentication;
+package nl.korfdegidts.exception;
 
-public enum Role {
-    ADMIN, USER, CONTENT_MNG
+public class MethodDoesNotExist extends Exception {
 }

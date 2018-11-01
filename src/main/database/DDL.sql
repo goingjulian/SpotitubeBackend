@@ -1,3 +1,9 @@
+create table role
+(
+  role varchar(255) not null
+    primary key
+);
+
 create table track
 (
   track_id         int auto_increment
@@ -17,9 +23,14 @@ create table user
   user_id  int auto_increment,
   username varchar(255) not null,
   password varchar(255) not null,
+  role     varchar(255) not null,
   primary key (user_id, username),
   constraint username
-  unique (username)
+  unique (username),
+  constraint fk_user_role
+  foreign key (role) references role (role)
+    on update cascade
+    on delete cascade
 );
 
 create table playlist
