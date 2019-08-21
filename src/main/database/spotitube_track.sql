@@ -1,0 +1,148 @@
+INSERT INTO spotitube.track (track_id,
+                             title,
+                             performer,
+                             duration,
+                             playcount,
+                             offlineAvailable,
+                             album,
+                             description,
+                             publication_date)
+VALUES (8, 'I am alone', 'Peter Jackson', 234, 1234, 1, 'My songs', null, null);
+INSERT INTO spotitube.track (track_id,
+                             title,
+                             performer,
+                             duration,
+                             playcount,
+                             offlineAvailable,
+                             album,
+                             description,
+                             publication_date)
+VALUES (13,
+        'Sunshine Under My Toes',
+        'Sean Currey',
+        3231,
+        89,
+        0,
+        null,
+        'My description, it is very long so i can test if the client will display this properly',
+        '1992-11-06');
+INSERT INTO spotitube.track (track_id,
+                             title,
+                             performer,
+                             duration,
+                             playcount,
+                             offlineAvailable,
+                             album,
+                             description,
+                             publication_date)
+VALUES (14, 'Cold Inside', 'Adam Handler', 112, 23, 0, 'MyAlbum', null, null);
+INSERT INTO spotitube.track (track_id,
+                             title,
+                             performer,
+                             duration,
+                             playcount,
+                             offlineAvailable,
+                             album,
+                             description,
+                             publication_date)
+VALUES (15, 'We The Best Music', 'DJ Khaled', 654, 1000, 0, null, 'Generic opening of every Khaled song', '2018-04-08');
+INSERT INTO spotitube.track (track_id,
+                             title,
+                             performer,
+                             duration,
+                             playcount,
+                             offlineAvailable,
+                             album,
+                             description,
+                             publication_date)
+VALUES (16, '10000 luchtbalonnen', 'K3', 450, 654, 0, 'Mijn album', null, null);
+INSERT INTO spotitube.track (track_id,
+                             title,
+                             performer,
+                             duration,
+                             playcount,
+                             offlineAvailable,
+                             album,
+                             description,
+                             publication_date)
+VALUES (17, 'Oya Lélé', 'K3', 234, 2342, 0, null, 'Cool nummer van K3', '2018-10-01');
+INSERT INTO spotitube.track (track_id,
+                             title,
+                             performer,
+                             duration,
+                             playcount,
+                             offlineAvailable,
+                             album,
+                             description,
+                             publication_date)
+VALUES (18, 'MaMaSé!', 'K3', 234, 656, 0, 'Album', null, null);
+INSERT INTO spotitube.track (track_id,
+                             title,
+                             performer,
+                             duration,
+                             playcount,
+                             offlineAvailable,
+                             album,
+                             description,
+                             publication_date)
+VALUES (19, 'De Politie', 'K3', 234, 655, 0, 'Politie Songs', null, null);
+INSERT INTO spotitube.track (track_id,
+                             title,
+                             performer,
+                             duration,
+                             playcount,
+                             offlineAvailable,
+                             album,
+                             description,
+                             publication_date)
+VALUES (20, 'Wild Thoughts', 'DJ Khaled', 239, 2345, 0, 'Anotha'' one', null, null);
+INSERT INTO spotitube.track (track_id,
+                             title,
+                             performer,
+                             duration,
+                             playcount,
+                             offlineAvailable,
+                             album,
+                             description,
+                             publication_date)
+VALUES (21, 'I''m The One', 'DJ Khaled', 675, 0, 0, 'Anotha'' One', null, null);
+INSERT INTO spotitube.track (track_id,
+                             title,
+                             performer,
+                             duration,
+                             playcount,
+                             offlineAvailable,
+                             album,
+                             description,
+                             publication_date)
+VALUES (22, 'Kabouterdans', 'Kabouter Plop', 234, 645, 0, 'Plop Hits', null, null);
+INSERT INTO spotitube.track (track_id,
+                             title,
+                             performer,
+                             duration,
+                             playcount,
+                             offlineAvailable,
+                             album,
+                             description,
+                             publication_date)
+VALUES (23, 'Ding Dong Song (You Touched My Tralala)', 'Gunther', 778, 45, 0, 'Ding songs', null, null);
+INSERT INTO spotitube.track (track_id,
+                             title,
+                             performer,
+                             duration,
+                             playcount,
+                             offlineAvailable,
+                             album,
+                             description,
+                             publication_date)
+VALUES (24, '99 luftballons', 'Nena', 899, 12, 0, null, 'A songs about air balloons', '1990-10-01');
+INSERT INTO spotitube.track (track_id,
+                             title,
+                             performer,
+                             duration,
+                             playcount,
+                             offlineAvailable,
+                             album,
+                             description,
+                             publication_date)
+VALUES (25, 'Heb Je Even Voor Mij', 'Frans Bauer', 788, 21, 0, 'Gare Songs', null, null);

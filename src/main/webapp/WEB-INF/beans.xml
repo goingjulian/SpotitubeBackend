@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2018. Proprietary and confidential.
+  ~ Developed by Julian Korf de Gidts.
+  ~
+  ~ All rights reserved. Unauthorized copying, reverse engineering, transmission, public performance or rental of this software is strictly prohibited.
+  ~
+  ~ File last modified: 10/29/18 11:22 AM
+  -->
+
+<beans
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
+        bean-discovery-mode="all">
+    <!--<alternatives>-->
+    <!--<class>nl.korfdegidts.service.loginService</class>-->
+    <!--</alternatives>-->
+</beans>
